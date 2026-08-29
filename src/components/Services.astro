@@ -3,40 +3,75 @@ const services = [
     {
         title: "Mantenimiento de Césped",
         description: "Corte, fertilización y aireación para un verde impecable durante todo el año.",
-        icon: "🌱"
+        icon: "🌱",
+        images: ["/fotos/cesped-1.jpg", "/fotos/cesped-2.jpg"] 
     },
     {
         title: "Poda Ornamental",
-        description: "Cuidado especializado de arbustos y árboles para un crecimiento saludable y controlable de manera proyuectiva y eficaz.",
-        icon: "🎨"
+        description: "Cuidado especializado de arbustos y árboles para un crecimiento saludable y controlable de manera proactiva y eficaz.",
+        icon: "🌳✂️",
+        images: ["/fotos/poda-1.jpg", "/fotos/poda-2.jpg"]
     },
     {
-        title: "Retiro de Sarmientos",
-        description: "(Vegetal, contrucción, demolición y muebles).",
-        icon: "💧"
+        title: "Retiro de Escombros y Vegetal",
+        description: "Retiro de ramas, restos de construcción, demolición y muebles.",
+        icon: "💧",
+        images: ["/fotos/retiro-1.jpg", "/fotos/retiro-2.jpg"]
     },
     {
         title: "Tala de Árboles",
-        description: "Tala, destozar y picar árboles de manera segura y eficiente, respetando las medidas de seguridad.",
-        icon: "✂️"
+        description: "Tala, destrozar y picar árboles de manera segura y eficiente, respetando las medidas de seguridad.",
+        icon: "🪓",
+        images: ["/fotos/tala-1.jpg", "/fotos/tala-2.jpg"]
+    },
+    {
+        title: "Limpieza y Perfilado",
+        description: "Limpieza profunda, shapeo de veredas y despeje de senderos para un acabado perfecto.",
+        icon: "🧹",
+        images: ["/fotos/limpieza-1.jpg", "/fotos/limpieza-2.jpg"]
     }
 ];
 ---
+
 <section id="servicios" class="py-20 bg-white">
-    <div class="max-w-6xl mx-auto px-4">
+    <div class="max-w-7xl mx-auto px-4">
         <div class="text-center mb-16">
             <h2 class="text-4xl font-bold text-green-900 mb-4">Nuestros Servicios</h2>
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">Ofrecemos soluciones integrales para el cuidado de tus áreas verdes con profesionalismo y dedicación.</p>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Cambiado a lg:grid-cols-3 para que 5 elementos fluyan de forma natural -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map(service => (
-                <div class="p-8 border border-green-100 rounded-2xl hover:shadow-xl transition-shadow bg-green-50/30 group">
-                    <div class="text-4xl mb-6 group-hover:scale-110 transition-transform inline-block">{service.icon}</div>
+                <div class="p-6 border border-green-100 rounded-2xl hover:shadow-xl transition-shadow bg-green-50/30 flex flex-col group">
+                    
+                    <!-- Carrusel de Imágenes -->
+                    <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 mb-6 pb-2 no-scrollbar">
+                        {service.images.map(img => (
+                            <img 
+                                src={img} 
+                                alt={service.title} 
+                                class="w-full h-56 object-cover rounded-xl snap-center shrink-0 shadow-sm"
+                            />
+                        ))}
+                    </div>
+
+                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform inline-block origin-left">{service.icon}</div>
                     <h3 class="text-xl font-bold text-green-800 mb-3">{service.title}</h3>
-                    <p class="text-gray-600 leading-relaxed">{service.description}</p>
+                    <p class="text-gray-600 leading-relaxed flex-grow">{service.description}</p>
                 </div>
             ))}
         </div>
     </div>
 </section>
+
+<style>
+    /* Clases personalizadas para ocultar la barra de desplazamiento fea y mantener el carrusel limpio */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>

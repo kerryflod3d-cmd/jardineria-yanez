@@ -7,7 +7,7 @@
             <div>
                 <h2 class="text-4xl font-bold mb-6">¿Listo para renovar tu espacio?</h2>
                 <p class="text-green-100 text-lg mb-8 leading-relaxed">
-                    Contáctanos hoy mismo para tener la 1ra. Asesoría personalizada y así tener un presupuesto totalmente gratis, estamos ansiosos por ayudarte a crear el jardín de tus sueños.
+                    Contáctanos hoy mismo para tener asesoría personalizada y así obtener el 1er. Presupuesto totalmente gratis, Estamos ansiosos por ayudarte a crear el jardín de tus sueños.
                 </p>
                 <div class="space-y-4">
                     <div class="flex items-center space-x-4">
@@ -20,28 +20,31 @@
                     </div>
                     <div class="flex items-center space-x-4">
                         <span class="text-2xl">📍</span>
-                        <span>Retiro, Región del Maule</span>
+                        <span>Región del Maule</span>
                     </div>
                 </div>
             </div>
             
             <div class="bg-white p-8 rounded-2xl shadow-2xl text-gray-800">
-                <form class="space-y-4">
-                    <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
-                        <input type="text" id="name" name="name" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition" placeholder="Tu nombre...">
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition" placeholder="tu@email.com">
-                    </div>
-                    <div>
-                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
-                        <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition" placeholder="¿En qué podemos ayudarte?"></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-green-600 text-white font-bold py-4 rounded-lg hover:bg-green-700 transition shadow-lg">
-                        Enviar Mensaje
-                    </button>
+                <form action="https://formsubmit.co/jardineriayanez@icloud.com" method="POST" class="space-y-4">
+    <!-- Campo oculto para desactivar el captcha molesto (opcional pero recomendado) -->
+    <input type="hidden" name="_captcha" value="false">
+    
+    <div>
+        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
+        <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition" placeholder="Tu nombre...">
+    </div>
+    <div>
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition" placeholder="tu@email.com">
+    </div>
+    <div>
+        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
+        <textarea id="message" name="message" rows="4" required class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition" placeholder="¿En qué podemos ayudarte?"></textarea>
+    </div>
+    <button type="submit" class="w-full bg-green-600 text-white font-bold py-4 rounded-lg hover:bg-green-700 transition shadow-lg">
+        Enviar Mensaje
+    </button>
                 </form>
             </div>
         </div>

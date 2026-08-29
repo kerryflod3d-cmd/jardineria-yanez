@@ -2,22 +2,49 @@
 // Navbar.astro
 import logo from '../assets/Logo.png';
 ---
-<nav class="bg-green-700/95 backdrop-blur-sm p-4 text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto flex justify-between items-center">
-        <a href="/" class="flex items-center">
-            <img src={logo.src} alt="Jardinería Tavo Logo" class="h-12 w-auto object-contain" />
+<nav class="bg-green-700/95 backdrop-blur-sm text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-4">
+        <a href="/" class="flex items-center py-1">
+            <img src={logo.src} alt="Jardinería Yañez Logo" class="h-16 w-16 md:h-20 md:w-20 rounded-full object-cover border-2 border-white shadow-lg" />
         </a>
         <ul class="flex space-x-6 font-medium hidden md:flex items-center">
             <li><a href="#" class="hover:text-green-200 transition">Inicio</a></li>
-            <li><a href="#servicios" class="hover:text-green-200 transition">Servicios</a></li>
-            <li><a href="#galeria" class="hover:text-green-200 transition">Galería</a></li>
+            <li><a href="#servicios" class="hover:text-green-250 transition">Servicios</a></li>
             <li><a href="#testimonios" class="hover:text-green-200 transition">Testimonios</a></li>
+            <li><a href="#cobertura" class="hover:text-green-200 transition">Cobertura</a></li>
             <li><a href="#contacto" class="hover:text-green-200 transition border-2 border-white/30 px-4 py-1 rounded-full hover:bg-white hover:text-green-700 transition-all">Contacto</a></li>
         </ul>
         
-        <!-- Botón móvil (simple para este ejemplo) -->
-        <button class="md:hidden text-2xl">
+        <!-- Botón móvil funcional -->
+        <button id="menu-btn" class="md:hidden text-2xl focus:outline-none p-2" aria-label="Abrir menú">
             ☰
         </button>
     </div>
+
+    <!-- Menú móvil desplegable -->
+    <div id="mobile-menu" class="hidden md:hidden pt-4 pb-2 border-t border-green-600 mt-1 px-4 bg-green-800">
+        <ul class="flex flex-col space-y-3 font-medium text-center">
+            <li><a href="#" class="block py-2 hover:bg-green-700 rounded transition">Inicio</a></li>
+            <li><a href="#servicios" class="block py-2 hover:bg-green-700 rounded transition">Servicios</a></li>
+            <li><a href="#testimonios" class="block py-2 hover:bg-green-700 rounded transition">Testimonios</a></li>
+            <li><a href="#cobertura" class="block py-2 hover:bg-green-700 rounded transition">Cobertura</a></li>
+            <li><a href="#contacto" class="block py-2 hover:bg-green-700 rounded transition">Contacto</a></li>
+        </ul>
+    </div>
 </nav>
+
+<script>
+    const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('mobile-menu');
+
+    btn?.addEventListener('click', () => {
+        menu?.classList.toggle('hidden');
+    });
+
+    // Cerrar menú al hacer clic en un enlace en móvil
+    menu?.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            menu?.classList.add('hidden');
+        });
+    });
+</script>
