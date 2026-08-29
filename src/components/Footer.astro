@@ -1,25 +1,44 @@
 ---
 const currentYear = new Date().getFullYear();
 ---
-<footer class="bg-gray-900 text-gray-400 py-12">
-    <div class="max-w-6xl mx-auto px-4 text-center">
-        <div class="mb-8">
-            <h2 class="text-2xl font-bold text-white mb-2">Jardinería Tavo</h2>
-            <p>Expertos en áreas verdes y paisajismo.</p>
+<footer class="bg-gray-900 text-gray-300 py-12">
+    <div class="max-w-4xl mx-auto px-4 text-center space-y-8">
+        <div>
+            <h2 class="text-3xl font-bold text-white mb-4">Jardinería Yañez</h2>
+            <p class="text-gray-300 text-lg leading-relaxed max-w-2xl mx-auto">
+                Un jardín cuidado no es solo un espacio verde; es el alma de tu hogar.
+            </p>
         </div>
         
-        <div class="flex justify-center space-x-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left bg-gray-800/50 p-6 rounded-2xl border border-gray-800">
+            <div>
+                <h3 class="font-bold text-white mb-2 text-green-400">🌱 Bienestar instantáneo</h3>
+                <p class="text-sm text-gray-400">Regala un refugio de paz y desconexión que reduce el estrés a solo unos pasos de la puerta.</p>
+            </div>
+            <div>
+                <h3 class="font-bold text-white mb-2 text-green-400">✨ Estética y valor</h3>
+                <p class="text-sm text-gray-400">Eleva la elegancia de tu propiedad y causa una primera impresión inolvidable.</p>
+            </div>
+            <div>
+                <h3 class="font-bold text-white mb-2 text-green-400">🌿 Vida y energía</h3>
+                <p class="text-sm text-gray-400">Atrae biodiversidad, mejora la calidad del aire y llena tu día a día de frescura y color.</p>
+            </div>
+        </div>
+
+        <p class="text-gray-400 italic">
+            "Tu jardín es tu conexión directa con la naturaleza; Cuídalo y transforma cada rincón en un oasis de vida."
+        </p>
+        
+        <div class="flex justify-center space-x-6 pt-4 border-t border-gray-800">
             <a href="#" class="hover:text-white transition">Inicio</a>
             <a href="#servicios" class="hover:text-white transition">Servicios</a>
-            <a href="#galeria" class="hover:text-white transition">Galería</a>
+            <a href="#testimonios" class="hover:text-white transition">Testimonios</a>
             <a href="#contacto" class="hover:text-white transition">Contacto</a>
         </div>
         
-        <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
-            <p>&copy; {currentYear} Jardinería Tavo. Todos los derechos reservados.</p>
-            <div class="mt-4 md:mt-0 flex space-x-4">
-                <span>Desarrollado con ❤️ y Astro</span>
-            </div>
+        <div class="border-t border-gray-800 pt-6 text-sm text-gray-500 flex flex-col md:flex-row justify-between items-center">
+            <p>&copy; {currentYear} Jardinería Yañez. Todos los derechos reservados.</p>
+            <p class="mt-2 md:mt-0">Diseñado con dedicación para áreas verdes excepcionales.</p>
         </div>
     </div>
 </footer>
