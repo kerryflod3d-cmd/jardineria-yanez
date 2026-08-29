@@ -1,11 +1,47 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Navbar from '../components/Navbar.astro';
+import Services from '../components/Services.astro';
+import Gallery from '../components/Gallery.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Jardinería Tavo | Expertos en áreas verdes">
+	<Navbar />
+
+	<!-- Sección Principal (Hero) -->
+	<header class="bg-green-50 py-24 text-center px-4 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M0 100 C 20 0 50 0 100 100 Z" fill="#059669" />
+            </svg>
+        </div>
+		<div class="max-w-4xl mx-auto relative z-10">
+			<h1 class="text-5xl md:text-7xl font-extrabold text-green-900 mb-6 leading-tight">
+				Le damos vida a tu <span class="text-green-600">jardín</span>
+			</h1>
+			<p class="text-xl text-green-800 mb-10 max-w-2xl mx-auto">
+				Diseño, mantenimiento y cuidado profesional de áreas verdes. Transforma tu espacio exterior en un oasis de paz y naturaleza.
+			</p>
+			<div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#contacto" class="bg-green-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-700 shadow-xl transition-all hover:scale-105 inline-block">
+                    Solicitar Presupuesto Gratis
+                </a>
+                <a href="#servicios" class="bg-white text-green-800 border-2 border-green-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-green-50 transition-all inline-block">
+                    Ver Servicios
+                </a>
+            </div>
+		</div>
+	</header>
+
+	<main>
+		<Services />
+        <Gallery />
+        <Testimonials />
+        <Contact />
+	</main>
+
+    <Footer />
 </Layout>

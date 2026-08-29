@@ -1,0 +1,47 @@
+---
+const testimonials = [
+    {
+        name: "María García",
+        role: "Propietaria",
+        text: "Jardinería Tavo transformó mi patio trasero en un lugar increíble. Su atención al detalle es excepcional.",
+        stars: 5
+    },
+    {
+        name: "Juan Pérez",
+        role: "Administrador de Condominio",
+        text: "Llevamos un año trabajando con ellos para el mantenimiento de las áreas comunes y siempre cumplen con lo prometido.",
+        stars: 5
+    },
+    {
+        name: "Sofía Rodríguez",
+        role: "Cliente Particular",
+        text: "Muy profesionales y puntuales. Recomiendo totalmente sus servicios de poda y diseño.",
+        stars: 4
+    }
+];
+---
+<section id="testimonios" class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-green-900 mb-4">Lo que dicen nuestros clientes</h2>
+            <p class="text-lg text-gray-600">La satisfacción de quienes confían en nosotros es nuestra mejor carta de presentación.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map(testimonial => (
+                <div class="p-8 bg-green-50/20 border border-green-100 rounded-2xl relative">
+                    <div class="flex text-yellow-500 mb-4">
+                        {Array.from({ length: testimonial.stars }).map(() => (
+                            <span>⭐</span>
+                        ))}
+                    </div>
+                    <p class="text-gray-700 italic mb-6">"{testimonial.text}"</p>
+                    <div>
+                        <p class="font-bold text-green-900">{testimonial.name}</p>
+                        <p class="text-sm text-green-700">{testimonial.role}</p>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>

@@ -1,0 +1,23 @@
+---
+// Navbar.astro
+import logo from '../assets/Logo.png';
+---
+<nav class="bg-green-700/95 backdrop-blur-sm p-4 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+        <a href="/" class="flex items-center">
+            <img src={logo.src} alt="Jardinería Tavo Logo" class="h-12 w-auto object-contain" />
+        </a>
+        <ul class="flex space-x-6 font-medium hidden md:flex items-center">
+            <li><a href="#" class="hover:text-green-200 transition">Inicio</a></li>
+            <li><a href="#servicios" class="hover:text-green-200 transition">Servicios</a></li>
+            <li><a href="#galeria" class="hover:text-green-200 transition">Galería</a></li>
+            <li><a href="#testimonios" class="hover:text-green-200 transition">Testimonios</a></li>
+            <li><a href="#contacto" class="hover:text-green-200 transition border-2 border-white/30 px-4 py-1 rounded-full hover:bg-white hover:text-green-700 transition-all">Contacto</a></li>
+        </ul>
+        
+        <!-- Botón móvil (simple para este ejemplo) -->
+        <button class="md:hidden text-2xl">
+            ☰
+        </button>
+    </div>
+</nav>
