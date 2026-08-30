@@ -50,7 +50,6 @@ const services = [
                             <img 
                                 src={img} 
                                 alt={service.title} 
-                                /* Agregué cursor-pointer, hover:scale-105 y la clase zoomable-image */
                                 class="h-64 w-auto max-w-full mx-auto rounded-xl snap-center shrink-0 shadow-md cursor-pointer hover:opacity-90 transition-opacity zoomable-image"
                             />
                         ))}
@@ -64,10 +63,27 @@ const services = [
         </div>
     </div>
 
-    <!-- MODAL (Pantalla negra oculta para agrandar imágenes) -->
-    <div id="imageModal" class="fixed inset-0 z-[100] hidden bg-black/90 flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
-        <button id="closeModal" class="absolute top-4 right-4 md:top-8 md:right-8 text-white text-5xl hover:text-green-400 focus:outline-none transition-colors">&times;</button>
+    <!-- MODAL (Pantalla negra oculta para agrandar imágenes y navegar) -->
+    <div id="imageModal" class="fixed inset-0 z-[100] hidden bg-black/95 flex items-center justify-center p-4 opacity-0 transition-opacity duration-300 select-none">
+        <!-- Botón de Cerrar -->
+        <button id="closeModal" class="absolute top-4 right-4 md:top-8 md:right-8 text-white text-5xl hover:text-green-400 focus:outline-none transition-colors z-[110]">&times;</button>
+        
+        <!-- Flecha Anterior -->
+        <button id="prevBtn" class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-white hover:text-green-400 focus:outline-none transition-colors z-[110] p-2 hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-10 h-10 md:w-14 md:h-14">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+        </button>
+
+        <!-- Imagen Ampliada -->
         <img id="modalImage" src="" alt="Imagen ampliada" class="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl scale-95 transition-transform duration-300" />
+        
+        <!-- Flecha Siguiente -->
+        <button id="nextBtn" class="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 text-white hover:text-green-400 focus:outline-none transition-colors z-[110] p-2 hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-10 h-10 md:w-14 md:h-14">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+        </button>
     </div>
 </section>
 
@@ -83,20 +99,39 @@ const services = [
 </style>
 
 <script>
-    // Lógica para abrir y cerrar el Modal de imágenes
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImage');
     const closeBtn = document.getElementById('closeModal');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
     const images = document.querySelectorAll('.zoomable-image');
 
-    // Función para abrir la imagen
+    let currentGroup = [];
+    let currentIndex = 0;
+
+    // Abrir imagen
     images.forEach(img => {
-        img.addEventListener('click', () => {
+        img.addEventListener('click', (e) => {
+            // Buscamos todas las imágenes del mismo servicio para poder navegar entre ellas
+            const carousel = (e.target as HTMLElement).closest('.no-scrollbar');
+            if(carousel) {
+                currentGroup = Array.from(carousel.querySelectorAll('.zoomable-image'));
+                currentIndex = currentGroup.indexOf(img as Element);
+            }
+
+            // Mostrar/Ocultar flechas si hay más de 1 imagen en el servicio
+            if (currentGroup.length > 1) {
+                prevBtn?.classList.remove('hidden');
+                nextBtn?.classList.remove('hidden');
+            } else {
+                prevBtn?.classList.add('hidden');
+                nextBtn?.classList.add('hidden');
+            }
+
             if(modalImg instanceof HTMLImageElement && img instanceof HTMLImageElement) {
                 modalImg.src = img.src;
                 modal?.classList.remove('hidden');
                 
-                // Pequeño retraso para que la animación fluya suavemente
                 setTimeout(() => {
                     modal?.classList.remove('opacity-0');
                     modalImg.classList.remove('scale-95');
@@ -106,33 +141,79 @@ const services = [
         });
     });
 
-    // Función para cerrar la imagen
+    // Función para cambiar de imagen
+    const showImage = (index) => {
+        if (currentGroup.length === 0) return;
+        // Reiniciar el índice si llegamos a los extremos (efecto bucle infinito)
+        if (index < 0) index = currentGroup.length - 1;
+        if (index >= currentGroup.length) index = 0;
+        
+        currentIndex = index;
+        if(modalImg instanceof HTMLImageElement && currentGroup[currentIndex] instanceof HTMLImageElement) {
+            const nextImg = currentGroup[currentIndex] as HTMLImageElement;
+            modalImg.src = nextImg.src;
+        }
+    };
+
+    // Navegar con botones
+    prevBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showImage(currentIndex - 1);
+    });
+
+    nextBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showImage(currentIndex + 1);
+    });
+
+    // Cerrar Modal
     const closeModal = () => {
         modal?.classList.add('opacity-0');
         modalImg?.classList.remove('scale-100');
         modalImg?.classList.add('scale-95');
         
-        // Espera a que termine la animación antes de ocultar el div
         setTimeout(() => {
             modal?.classList.add('hidden');
             if(modalImg instanceof HTMLImageElement) modalImg.src = '';
+            currentGroup = [];
         }, 300);
     };
 
-    // Cerrar con el botón X
     closeBtn?.addEventListener('click', closeModal);
 
-    // Cerrar al hacer clic en el fondo negro (fuera de la foto)
     modal?.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
+        if (e.target === modal) closeModal();
+    });
+
+    // Soporte para teclado (Flechas y Escape)
+    document.addEventListener('keydown', (e) => {
+        if (!modal?.classList.contains('hidden')) {
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
+            if (e.key === 'ArrowRight') showImage(currentIndex + 1);
         }
     });
 
-    // Cerrar con la tecla "Escape" del teclado
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !modal?.classList.contains('hidden')) {
-            closeModal();
+    // Soporte para deslizar en celulares (Touch Swipe)
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    modal?.addEventListener('touchstart', (e) => {
+        touchStartX = (e as TouchEvent).changedTouches[0].screenX;
+    }, { passive: true });
+
+    modal?.addEventListener('touchend', (e) => {
+        touchEndX = (e as TouchEvent).changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+
+    const handleSwipe = () => {
+        const threshold = 50; // Distancia mínima para considerar que fue un "deslizamiento"
+        if (touchStartX - touchEndX > threshold) {
+            showImage(currentIndex + 1); // Deslizó a la izquierda (Siguiente)
         }
-    });
+        if (touchEndX - touchStartX > threshold) {
+            showImage(currentIndex - 1); // Deslizó a la derecha (Anterior)
+        }
+    };
 </script>
