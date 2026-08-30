@@ -91,7 +91,7 @@ import logo from '../assets/Logo.png';
             const temp = Math.round(datos.current_weather.temperature);
             
             // Construimos el texto con la fecha al inicio y las ciudades en tu orden específico
-            const texto = `📅 ${fecha} &nbsp;&nbsp;|&nbsp;&nbsp; ☀️ Retiro: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Copihue: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Parral: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Longaví: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Linares: ${temp}°C`;
+            const texto = `Fecha: "${fecha}" &nbsp;&nbsp;|&nbsp;&nbsp; ☀️ Retiro: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Copihue: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Parral: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Longaví: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Linares: ${temp}°C`;
             
             const ticker = document.getElementById('clima-ticker');
             if (ticker) ticker.innerHTML = texto;
