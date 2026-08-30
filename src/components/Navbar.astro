@@ -4,12 +4,13 @@
 <nav class="bg-green-700/95 dark:bg-gray-900/95 backdrop-blur-sm text-white shadow-md sticky top-0 z-50 transition-colors duration-300">
     <div class="w-full flex justify-between items-center px-3 py-3">
         
-        <!-- SECCIÓN CLIMA Y FECHA OPTIMIZADA PARA iOS -->
+        <!-- SECCIÓN CLIMA Y FECHA BLINDADA PARA iOS -->
         <div class="flex-1 overflow-hidden mr-2 flex items-center">
-            <div class="w-full text-white/95 text-xs sm:text-sm md:text-lg font-medium whitespace-nowrap overflow-hidden">
-                <!-- Inicialmente sin animación para que iOS pinte el texto completo primero -->
-                <div id="ticker-container" class="inline-block">
-                    <span id="clima-ticker">Consultando fecha y clima... 🌤️</span>
+            <div class="w-full text-white/95 text-xs sm:text-sm md:text-lg font-medium whitespace-nowrap overflow-hidden relative">
+                <!-- Usamos dos veces el texto idéntico para crear un bucle continuo perfecto que Safari no puede romper -->
+                <div id="marquee-track" class="inline-block whitespace-nowrap">
+                    <span id="clima-ticker-1">Consultando fecha y clima... 🌤️</span>
+                    <span id="clima-ticker-2" class="ml-12">Consultando fecha y clima... 🌤️</span>
                 </div>
             </div>
         </div>
@@ -49,20 +50,19 @@
 </nav>
 
 <style>
-    /* La clase que aplicaremos dinámicamente solo cuando el texto ya esté listo */
-    .animate-marquee-ios {
+    /* Bucle infinito real simétrico sin saltos en Safari */
+    .animate-marquee-ios-perfect {
         display: inline-block;
-        padding-left: 100%;
-        animation: marquee 45s linear infinite;
-        -webkit-animation: marquee 45s linear infinite;
+        animation: scrollMarquee 30s linear infinite;
+        -webkit-animation: scrollMarquee 30s linear infinite;
     }
-    @keyframes marquee {
+    @keyframes scrollMarquee {
         0% { transform: translate3d(0, 0, 0); }
-        100% { transform: translate3d(-100%, 0, 0); }
+        100% { transform: translate3d(-50%, 0, 0); }
     }
-    @-webkit-keyframes marquee {
+    @-webkit-keyframes scrollMarquee {
         0% { transform: translate3d(0, 0, 0); }
-        100% { transform: translate3d(-100%, 0, 0); }
+        100% { transform: translate3d(-50%, 0, 0); }
     }
 </style>
 
@@ -96,7 +96,7 @@
         link.addEventListener('click', () => { menu?.classList.add('hidden'); });
     });
 
-    // Lógica Clima y Fecha optimizada para iOS
+    // Lógica Clima y Fecha con duplicado exacto para bucle continuo en iPhone
     async function cargarClimaYFecha() {
         try {
             let fecha = new Date().toLocaleDateString('es-CL', { weekday: 'short', day: 'numeric', month: 'short' });
@@ -105,22 +105,27 @@
             const datos = await respuesta.json();
             const temp = Math.round(datos.current_weather.temperature);
             
-            const texto = `Fecha:  ${fecha} &nbsp;&nbsp;|&nbsp;&nbsp; ☀️ Retiro: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Copihue: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Parral: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Longaví: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Linares: ${temp}°C`;
+            const texto = `📅 ${fecha} &nbsp;&nbsp;|&nbsp;&nbsp; ☀️ Retiro: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Copihue: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Parral: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Longaví: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Linares: ${temp}°C`;
             
-            const ticker = document.getElementById('clima-ticker');
-            const container = document.getElementById('ticker-container');
+            const ticker1 = document.getElementById('clima-ticker-1');
+            const ticker2 = document.getElementById('clima-ticker-2');
+            const track = document.getElementById('marquee-track');
             
-            if (ticker) ticker.innerHTML = texto;
+            if (ticker1) ticker1.innerHTML = texto;
+            if (ticker2) ticker2.innerHTML = texto;
             
-            // Activamos la animación de Safari solo después de que el texto final ya se insertó
-            if (container) {
-                container.classList.add('animate-marquee-ios');
+            // Aplicamos la animación de bucle perfecto al contenedor
+            if (track) {
+                track.classList.add('animate-marquee-ios-perfect');
             }
         } catch (error) {
-            const ticker = document.getElementById('clima-ticker');
-            const container = document.getElementById('ticker-container');
-            if (ticker) ticker.innerHTML = "🌱 Clima ideal para cuidar tu jardín";
-            if (container) container.classList.add('animate-marquee-ios');
+            const ticker1 = document.getElementById('clima-ticker-1');
+            const ticker2 = document.getElementById('clima-ticker-2');
+            const track = document.getElementById('marquee-track');
+            const fallback = "🌱 Clima ideal para cuidar tu jardín &nbsp;&nbsp;|&nbsp;&nbsp; 🌱 Clima ideal para cuidar tu jardín";
+            if (ticker1) ticker1.innerHTML = fallback;
+            if (ticker2) ticker2.innerHTML = fallback;
+            if (track) track.classList.add('animate-marquee-ios-perfect');
         }
     }
     cargarClimaYFecha();
