@@ -1,25 +1,27 @@
 ---
 // Navbar.astro
-import logo from '../assets/Logo.png';
+import logo from '../assets/Logo.png'; // Asegúrate de que apunte a tu logo actual
 ---
-<!-- Agregamos dark:bg-gray-900/95 y transition-colors -->
-<nav class="bg-green-700/95 dark:bg-gray-900/95 backdrop-blur-sm text-white shadow-md sticky top-0 z-50 overflow-hidden transition-colors duration-300">
-    <div class="max-w-6xl mx-auto flex justify-between items-center px-4">
-        <a href="/" class="flex items-center py-1 shrink-0">
-            <img src={logo.src} alt="Jardinería Yañez Logo" class="h-16 w-16 md:h-20 md:w-20 rounded-full object-cover border-2 border-white shadow-lg" />
+<!-- Quitamos el overflow-hidden y aseguramos altura fija opcional si lo deseas -->
+<nav class="bg-green-700/95 dark:bg-gray-900/95 backdrop-blur-sm text-white shadow-md sticky top-0 z-50 transition-colors duration-300">
+    <!-- Cambiamos max-w-6xl por w-full y quitamos padding horizontal del contenedor general -->
+    <div class="w-full flex justify-between items-center">
+        
+        <!-- LOGO AL RAS DE LOS BORDES -->
+        <a href="/" class="flex items-center h-16 md:h-20 shrink-0">
+            <img src={logo.src} alt="Jardinería Yañez Logo" class="h-full w-auto object-cover block m-0 p-0" />
         </a>
         
-        <!-- INICIO SECCIÓN CLIMA Y FECHA -->
-        <div class="flex-1 overflow-hidden mx-4 md:mx-8 flex items-center">
-            <div class="w-full text-white/90 text-sm md:text-base font-medium whitespace-nowrap overflow-hidden">
+        <!-- SECCIÓN CLIMA Y FECHA (con su propio padding para que el texto no pegue al borde) -->
+        <div class="flex-1 overflow-hidden mx-4 flex items-center">
+            <div class="w-full text-white/90 text-xs md:text-base font-medium whitespace-nowrap overflow-hidden">
                 <div class="inline-block animate-marquee">
                     <span id="clima-ticker">Consultando fecha y clima... 🌤️</span>
                 </div>
             </div>
         </div>
-        <!-- FIN SECCIÓN CLIMA Y FECHA -->
 
-        <ul class="flex space-x-6 font-medium hidden md:flex items-center shrink-0">
+        <ul class="flex space-x-6 font-medium hidden md:flex items-center shrink-0 px-4">
             <li><a href="#" class="hover:text-green-200 transition">Inicio</a></li>
             <li><a href="#servicios" class="hover:text-green-200 transition">Servicios</a></li>
             <li><a href="#testimonios" class="hover:text-green-200 transition">Testimonios</a></li>
@@ -27,21 +29,21 @@ import logo from '../assets/Logo.png';
             <li><a href="#contacto" class="hover:text-green-200 transition border-2 border-white/30 px-4 py-1 rounded-full hover:bg-white hover:text-green-700 transition-all">Contacto</a></li>
         </ul>
         
-        <!-- Grupo de botones derecho (Luna y Menú móvil) -->
-        <div class="flex items-center shrink-0 ml-2 md:ml-6">
+        <!-- Grupo de botones derecho -->
+        <div class="flex items-center shrink-0 px-2">
             <!-- BOTÓN MODO NOCHE -->
             <button id="theme-toggle" class="text-2xl p-2 hover:scale-110 transition-transform focus:outline-none" aria-label="Cambiar tema">
                 <span id="theme-icon">🌙</span>
             </button>
 
-            <!-- Botón móvil funcional -->
+            <!-- Botón móvil -->
             <button id="menu-btn" class="md:hidden text-2xl focus:outline-none p-2 ml-1" aria-label="Abrir menú">
                 ☰
             </button>
         </div>
     </div>
 
-    <!-- Menú móvil desplegable (Agregamos colores oscuros para el modo noche) -->
+    <!-- Menú móvil desplegable -->
     <div id="mobile-menu" class="hidden md:hidden pt-4 pb-2 border-t border-green-600 dark:border-gray-700 mt-1 px-4 bg-green-800 dark:bg-gray-800 transition-colors duration-300">
         <ul class="flex flex-col space-y-3 font-medium text-center">
             <li><a href="#" class="block py-2 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition">Inicio</a></li>
@@ -57,7 +59,7 @@ import logo from '../assets/Logo.png';
     .animate-marquee {
         display: inline-block;
         padding-left: 100%;
-        animation: marquee 30s linear infinite; /* Le di 5 segundos más para que el texto extra se lea con calma */
+        animation: marquee 30s linear infinite;
     }
     @keyframes marquee {
         0% { transform: translate(0, 0); }
@@ -66,21 +68,18 @@ import logo from '../assets/Logo.png';
 </style>
 
 <script>
-    // 1. LÓGICA DEL MODO NOCHE (Dark Mode)
+    // Lógica del Modo Noche
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
 
-    // Revisar al cargar la página si ya está en modo oscuro
     if (document.documentElement.classList.contains('dark')) {
         if(themeIcon) themeIcon.textContent = '☀️';
     } else {
         if(themeIcon) themeIcon.textContent = '🌙';
     }
 
-    // Cambiar el modo al hacer clic
     themeToggleBtn?.addEventListener('click', function() {
         document.documentElement.classList.toggle('dark');
-        
         if (document.documentElement.classList.contains('dark')) {
             localStorage.setItem('theme', 'dark');
             if(themeIcon) themeIcon.textContent = '☀️';
@@ -90,42 +89,23 @@ import logo from '../assets/Logo.png';
         }
     });
 
-    // 2. LÓGICA DEL MENÚ MÓVIL
+    // Lógica Menú Móvil
     const btn = document.getElementById('menu-btn');
     const menu = document.getElementById('mobile-menu');
-
-    btn?.addEventListener('click', () => {
-        menu?.classList.toggle('hidden');
-    });
-
+    btn?.addEventListener('click', () => { menu?.classList.toggle('hidden'); });
     menu?.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            menu?.classList.add('hidden');
-        });
+        link.addEventListener('click', () => { menu?.classList.add('hidden'); });
     });
 
-    // 3. LÓGICA DE LA FECHA Y EL CLIMA
+    // Lógica Clima y Fecha
     async function cargarClimaYFecha() {
         try {
-            // Pasamos las opciones directamente para evitar el error estricto de TypeScript
-            let fecha = new Date().toLocaleDateString('es-CL', { 
-                weekday: 'long', 
-                day: 'numeric', 
-                month: 'long', 
-                year: 'numeric' 
-            });
-            
-            // Ponemos la primera letra en mayúscula para que se vea más elegante
+            let fecha = new Date().toLocaleDateString('es-CL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
             fecha = fecha.charAt(0).toUpperCase() + fecha.slice(1);
-
-            // Consultamos el clima
             const respuesta = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-36.05&longitude=-71.77&current_weather=true');
             const datos = await respuesta.json();
             const temp = Math.round(datos.current_weather.temperature);
-            
-            // Construimos el texto con la fecha al inicio y las ciudades en tu orden específico
-            const texto = `Fecha: "${fecha}" &nbsp;&nbsp;|&nbsp;&nbsp; ☀️ Retiro: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Copihue: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Parral: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Longaví: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Linares: ${temp}°C`;
-            
+            const texto = `📅 ${fecha} &nbsp;&nbsp;|&nbsp;&nbsp; ☀️ Retiro: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Copihue: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Parral: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Longaví: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Linares: ${temp}°C`;
             const ticker = document.getElementById('clima-ticker');
             if (ticker) ticker.innerHTML = texto;
         } catch (error) {
