@@ -1,16 +1,32 @@
 ---
+import logo from '../assets/logo1_2.png'; // Asegúrate de que el nombre coincida exactamente con tu archivo
 const currentYear = new Date().getFullYear();
+const logoUrl = logo.src;
 ---
-<footer class="bg-gray-900 text-gray-300 py-12">
-    <div class="max-w-4xl mx-auto px-4 text-center space-y-8">
+
+<footer class="bg-gray-900 text-gray-300 py-16 relative overflow-hidden">
+    
+    <!-- CAPA DE FONDO: LOGO REDONDO (SIN ESQUINAS BLANCAS) -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10 z-0">
+        <div class="w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden flex items-center justify-center">
+            <img 
+                src={logoUrl} 
+                alt="Logo Marca de Agua" 
+                class="w-full h-full object-cover scale-110"
+            />
+        </div>
+    </div>
+
+    <!-- CONTENIDO DEL FOOTER -->
+    <div class="max-w-4xl mx-auto px-4 text-center space-y-8 relative z-10">
         <div>
-            <h2 class="text-3xl font-bold text-white mb-4">Jardinería Yañez Spa</h2>
+            <h2 class="text-3xl font-bold text-white mb-4">Jardinería Yañez</h2>
             <p class="text-gray-300 text-lg leading-relaxed max-w-2xl mx-auto">
                 Un jardín cuidado no es solo un espacio verde; es el alma de tu hogar.
             </p>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left bg-gray-800/50 p-6 rounded-2xl border border-gray-800">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left bg-gray-800/80 backdrop-blur-sm p-6 rounded-2xl border border-gray-800 shadow-xl">
             <div>
                 <h3 class="font-bold text-white mb-2 text-green-400">🌱 Bienestar instantáneo</h3>
                 <p class="text-sm text-gray-400">Regala un refugio de paz y desconexión que reduce el estrés a solo unos pasos de la puerta.</p>

@@ -1,20 +1,12 @@
 ---
 // Navbar.astro
-import logo from '../assets/Logo.png'; // Asegúrate de que apunte a tu logo actual
 ---
-<!-- Quitamos el overflow-hidden y aseguramos altura fija opcional si lo deseas -->
 <nav class="bg-green-700/95 dark:bg-gray-900/95 backdrop-blur-sm text-white shadow-md sticky top-0 z-50 transition-colors duration-300">
-    <!-- Cambiamos max-w-6xl por w-full y quitamos padding horizontal del contenedor general -->
-    <div class="w-full flex justify-between items-center">
+    <div class="w-full flex justify-between items-center px-4 py-3">
         
-        <!-- LOGO AL RAS DE LOS BORDES -->
-        <a href="/" class="flex items-center h-16 md:h-20 shrink-0">
-            <img src={logo.src} alt="Jardinería Yañez Logo" class="h-full w-auto object-cover block m-0 p-0" />
-        </a>
-        
-        <!-- SECCIÓN CLIMA Y FECHA (con su propio padding para que el texto no pegue al borde) -->
-        <div class="flex-1 overflow-hidden mx-4 flex items-center">
-            <div class="w-full text-white/90 text-xs md:text-base font-medium whitespace-nowrap overflow-hidden">
+        <!-- SECCIÓN CLIMA Y FECHA AMPLIADA (Ocupa todo el espacio donde antes iba el logo) -->
+        <div class="flex-1 overflow-hidden mr-4 flex items-center">
+            <div class="w-full text-white/95 text-base md:text-xl font-semibold whitespace-nowrap overflow-hidden">
                 <div class="inline-block animate-marquee">
                     <span id="clima-ticker">Consultando fecha y clima... 🌤️</span>
                 </div>
@@ -30,7 +22,7 @@ import logo from '../assets/Logo.png'; // Asegúrate de que apunte a tu logo act
         </ul>
         
         <!-- Grupo de botones derecho -->
-        <div class="flex items-center shrink-0 px-2">
+        <div class="flex items-center shrink-0">
             <!-- BOTÓN MODO NOCHE -->
             <button id="theme-toggle" class="text-2xl p-2 hover:scale-110 transition-transform focus:outline-none" aria-label="Cambiar tema">
                 <span id="theme-icon">🌙</span>
@@ -59,7 +51,7 @@ import logo from '../assets/Logo.png'; // Asegúrate de que apunte a tu logo act
     .animate-marquee {
         display: inline-block;
         padding-left: 100%;
-        animation: marquee 30s linear infinite;
+        animation: marquee 35s linear infinite;
     }
     @keyframes marquee {
         0% { transform: translate(0, 0); }
@@ -105,7 +97,7 @@ import logo from '../assets/Logo.png'; // Asegúrate de que apunte a tu logo act
             const respuesta = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-36.05&longitude=-71.77&current_weather=true');
             const datos = await respuesta.json();
             const temp = Math.round(datos.current_weather.temperature);
-            const texto = `📅 ${fecha} &nbsp;&nbsp;|&nbsp;&nbsp; ☀️ Retiro: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Copihue: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Parral: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Longaví: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Linares: ${temp}°C`;
+            const texto = `Fecha:  ${fecha} &nbsp;&nbsp;|&nbsp;&nbsp; ☀️ Retiro: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Copihue: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Parral: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Longaví: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Linares: ${temp}°C`;
             const ticker = document.getElementById('clima-ticker');
             if (ticker) ticker.innerHTML = texto;
         } catch (error) {
