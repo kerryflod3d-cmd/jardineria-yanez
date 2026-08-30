@@ -2,21 +2,32 @@
 // Navbar.astro
 import logo from '../assets/Logo.png';
 ---
-<nav class="bg-green-700/95 backdrop-blur-sm text-white shadow-md sticky top-0 z-50">
+<nav class="bg-green-700/95 backdrop-blur-sm text-white shadow-md sticky top-0 z-50 overflow-hidden">
     <div class="max-w-6xl mx-auto flex justify-between items-center px-4">
-        <a href="/" class="flex items-center py-1">
+        <a href="/" class="flex items-center py-1 shrink-0">
             <img src={logo.src} alt="Jardinería Yañez Logo" class="h-16 w-16 md:h-20 md:w-20 rounded-full object-cover border-2 border-white shadow-lg" />
         </a>
-        <ul class="flex space-x-6 font-medium hidden md:flex items-center">
+        
+        <!-- INICIO SECCIÓN CLIMA Y FECHA -->
+        <div class="flex-1 overflow-hidden mx-4 md:mx-8 flex items-center">
+            <div class="w-full text-white/90 text-sm md:text-base font-medium whitespace-nowrap overflow-hidden">
+                <div class="inline-block animate-marquee">
+                    <span id="clima-ticker">Consultando fecha y clima... 🌤️</span>
+                </div>
+            </div>
+        </div>
+        <!-- FIN SECCIÓN CLIMA Y FECHA -->
+
+        <ul class="flex space-x-6 font-medium hidden md:flex items-center shrink-0">
             <li><a href="#" class="hover:text-green-200 transition">Inicio</a></li>
-            <li><a href="#servicios" class="hover:text-green-250 transition">Servicios</a></li>
+            <li><a href="#servicios" class="hover:text-green-200 transition">Servicios</a></li>
             <li><a href="#testimonios" class="hover:text-green-200 transition">Testimonios</a></li>
             <li><a href="#cobertura" class="hover:text-green-200 transition">Cobertura</a></li>
             <li><a href="#contacto" class="hover:text-green-200 transition border-2 border-white/30 px-4 py-1 rounded-full hover:bg-white hover:text-green-700 transition-all">Contacto</a></li>
         </ul>
         
         <!-- Botón móvil funcional -->
-        <button id="menu-btn" class="md:hidden text-2xl focus:outline-none p-2" aria-label="Abrir menú">
+        <button id="menu-btn" class="md:hidden text-2xl focus:outline-none p-2 shrink-0" aria-label="Abrir menú">
             ☰
         </button>
     </div>
@@ -33,7 +44,20 @@ import logo from '../assets/Logo.png';
     </div>
 </nav>
 
+<style>
+    .animate-marquee {
+        display: inline-block;
+        padding-left: 100%;
+        animation: marquee 30s linear infinite; /* Le di 5 segundos más para que el texto extra se lea con calma */
+    }
+    @keyframes marquee {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(-100%, 0); }
+    }
+</style>
+
 <script>
+    // 1. LÓGICA DEL MENÚ MÓVIL
     const btn = document.getElementById('menu-btn');
     const menu = document.getElementById('mobile-menu');
 
@@ -41,10 +65,40 @@ import logo from '../assets/Logo.png';
         menu?.classList.toggle('hidden');
     });
 
-    // Cerrar menú al hacer clic en un enlace en móvil
     menu?.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             menu?.classList.add('hidden');
         });
     });
+
+    // 2. LÓGICA DE LA FECHA Y EL CLIMA
+    async function cargarClimaYFecha() {
+        try {
+            // CORRECCIÓN: Pasamos las opciones directamente para evitar el error estricto de TypeScript
+            let fecha = new Date().toLocaleDateString('es-CL', { 
+                weekday: 'long', 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric' 
+            });
+            
+            // Ponemos la primera letra en mayúscula para que se vea más elegante
+            fecha = fecha.charAt(0).toUpperCase() + fecha.slice(1);
+
+            // Consultamos el clima
+            const respuesta = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-36.05&longitude=-71.77&current_weather=true');
+            const datos = await respuesta.json();
+            const temp = Math.round(datos.current_weather.temperature);
+            
+            // Construimos el texto con la fecha al inicio y las ciudades en tu orden específico
+            const texto = `📅 ${fecha} &nbsp;&nbsp;|&nbsp;&nbsp; ☀️ Retiro: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Copihue: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Parral: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Longaví: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Linares: ${temp}°C`;
+            
+            const ticker = document.getElementById('clima-ticker');
+            if (ticker) ticker.innerHTML = texto;
+        } catch (error) {
+            const ticker = document.getElementById('clima-ticker');
+            if (ticker) ticker.innerHTML = "🌱 Clima ideal para cuidar tu jardín";
+        }
+    }
+    cargarClimaYFecha();
 </script>
