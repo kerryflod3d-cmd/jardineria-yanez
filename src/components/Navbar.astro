@@ -98,59 +98,58 @@
 
     // Función para convertir el código de Open-Meteo en un emoji considerando si es de día o de noche
     function obtenerEmojiClima(code: number, isDay: number): string {
-        // Si es de noche (isDay === 0)
         if (isDay === 0) {
             switch (code) {
-                case 0: return '🌙'; // Despejado de noche
+                case 0: return '🌙'; 
                 case 1:
-                case 2: return '🌙☁️'; // Parcialmente nublado de noche
-                case 3: return '☁️'; // Nublado nocturno
+                case 2: return '🌙☁️'; 
+                case 3: return '☁️'; 
                 case 51:
                 case 53:
                 case 55:
                 case 61:
                 case 63:
-                case 65: return '🌧️'; // Lluvia nocturna
+                case 65: return '🌧️'; 
                 default: return '🌙';
             }
         }
 
-        // Si es de día (isDay === 1)
         switch (code) {
-            case 0: return '☀️'; // Despejado
+            case 0: return '☀️'; 
             case 1:
-            case 2: return '⛅'; // Parcialmente nublado
-            case 3: return '☁️'; // Nublado
+            case 2: return '⛅'; 
+            case 3: return '☁️'; 
             case 45:
-            case 48: return '🌫️'; // Neblina
+            case 48: return '🌫️'; 
             case 51:
             case 53:
             case 55:
             case 56:
-            case 57: return '🌧️'; // Llovizna
+            case 57: return '🌧️'; 
             case 61:
             case 63:
             case 65:
             case 66:
-            case 67: return '🌧️'; // Lluvia
+            case 67: return '🌧️'; 
             case 71:
             case 73:
             case 75:
-            case 77: return '❄️'; // Nieve
+            case 77: return '❄️'; 
             case 80:
             case 81:
-            case 82: return '🌦️'; // Chubascos
+            case 82: return '🌦️'; 
             case 95:
             case 96:
-            case 99: return '⚡'; // Tormenta eléctrica
+            case 99: return '⚡'; 
             default: return '🌤️';
         }
     }
 
-    // Lógica Clima y Fecha con duplicado exacto para bucle continuo en iPhone
+    // Lógica Clima y Fecha con año incluido y bucle continuo en iPhone
     async function cargarClimaYFecha() {
         try {
-            let fecha = new Date().toLocaleDateString('es-CL', { weekday: 'short', day: 'numeric', month: 'short' });
+            // Agregamos year: 'numeric' para que muestre el año actual (ej. 2026)
+            let fecha = new Date().toLocaleDateString('es-CL', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
             fecha = fecha.charAt(0).toUpperCase() + fecha.slice(1);
             
             const respuesta = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-36.05&longitude=-71.77&current_weather=true');
@@ -158,10 +157,9 @@
             
             const temp = Math.round(datos.current_weather.temperature);
             const weatherCode = datos.current_weather.weathercode;
-            const isDay = datos.current_weather.is_day; // 1 = Día, 0 = Noche
+            const isDay = datos.current_weather.is_day;
             const emojiClima = obtenerEmojiClima(weatherCode, isDay);
             
-            // Asignamos el emoji correspondiente (sol o luna) al lado de cada temperatura
             const texto = `Fecha: ${fecha} &nbsp;&nbsp;|&nbsp;&nbsp; Clima: Retiro: ${temp + 1}°C ${emojiClima} &nbsp;&nbsp;|&nbsp;&nbsp; Copihue: ${temp + 1}°C ${emojiClima} &nbsp;&nbsp;|&nbsp;&nbsp; Parral: ${temp}°C ${emojiClima} &nbsp;&nbsp;|&nbsp;&nbsp; Longaví: ${temp}°C ${emojiClima} &nbsp;&nbsp;|&nbsp;&nbsp; Linares: ${temp}°C ${emojiClima}`;
             
             const ticker1 = document.getElementById('clima-ticker-1');
@@ -171,7 +169,6 @@
             if (ticker1) ticker1.innerHTML = texto;
             if (ticker2) ticker2.innerHTML = texto;
             
-            // Aplicamos la animación de bucle perfecto al contenedor
             if (track) {
                 track.classList.add('animate-marquee-ios-perfect');
             }
