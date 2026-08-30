@@ -105,7 +105,7 @@
             const datos = await respuesta.json();
             const temp = Math.round(datos.current_weather.temperature);
             
-            const texto = `📅 ${fecha} &nbsp;&nbsp;|&nbsp;&nbsp; ☀️ Retiro: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Copihue: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Parral: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Longaví: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Linares: ${temp}°C`;
+            const texto = `Fecha: ${fecha} &nbsp;&nbsp;|&nbsp;&nbsp; ☀️ Retiro: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Copihue: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Parral: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Longaví: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Linares: ${temp}°C`;
             
             const ticker1 = document.getElementById('clima-ticker-1');
             const ticker2 = document.getElementById('clima-ticker-2');

@@ -6,13 +6,13 @@ const logoUrl = logo.src;
 
 <footer class="bg-gray-900 text-gray-300 py-16 relative overflow-hidden">
     
-    <!-- LOGO CÍRCULO PERFECTO DE FONDO (NÍTIDO) -->
+    <!-- LOGO CON CORRECCIÓN DE CENTRADO EXACTA -->
     <div class="absolute top-10 inset-x-0 flex justify-center pointer-events-none opacity-20 z-0">
         <div class="w-[95vw] md:w-[500px] aspect-square rounded-full overflow-hidden flex items-center justify-center">
             <img 
                 src={logoUrl} 
                 alt="Logo Marca de Agua" 
-                class="w-full h-full object-cover"
+                class="w-full h-full object-contain translate-y-3 scale-105"
             />
         </div>
     </div>
@@ -26,7 +26,7 @@ const logoUrl = logo.src;
             </p>
         </div>
         
-        <!-- TARJETA CON TRANSPARENCIA LIMPIA (SIN EFECTO BORROSO) -->
+        <!-- TARJETA CON TRANSPARENCIA LIMPIA -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left bg-gray-900/40 p-6 rounded-2xl border border-gray-800/60 shadow-xl">
             <div>
                 <h3 class="font-bold text-white mb-2 text-green-400">🌱 Bienestar instantáneo</h3>
