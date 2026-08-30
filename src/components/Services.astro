@@ -4,31 +4,47 @@ const services = [
         title: "Mantenimiento de Césped",
         description: "Corte, fertilización y aireación para un verde impecable durante todo el año.",
         icon: "🌱",
-        images: ["/fotos/cesped-1.jpg", "/fotos/cesped-2.jpg"] 
+        images: ["/fotos/cesped-1.jpg",  "/fotos/cesped-2.jpg", "/fotos/cesped-3.jpg"] 
     },
     {
         title: "Poda Ornamental",
         description: "Cuidado especializado de arbustos y árboles para un crecimiento saludable y controlable de manera proactiva y eficaz.",
         icon: "🌳✂️",
-        images: ["/fotos/poda-1.jpg", "/fotos/poda-2.jpg"]
+        // Aquí mantuve tus 4 fotos originales
+        images: ["/fotos/poda-1.jpg", "/fotos/poda-2.jpg", "/fotos/poda-3.jpg", "/fotos/poda-4.jpg"]
     },
     {
         title: "Retiro de Escombros y Vegetal",
         description: "Retiro de ramas, restos de construcción, demolición y muebles.",
         icon: "💧",
-        images: ["/fotos/retiro-1.jpg", "/fotos/retiro-2.jpg"]
+        // Fotos de prueba (placeholders) de 400x600 pixeles
+        images: [
+            "https://picsum.photos/id/292/400/600", 
+            "https://picsum.photos/id/175/400/600", 
+            "https://picsum.photos/id/111/400/600"
+        ]
     },
     {
         title: "Tala de Árboles",
         description: "Tala, destrozar y picar árboles de manera segura y eficiente, respetando las medidas de seguridad.",
         icon: "🪓",
-        images: ["/fotos/tala-1.jpg", "/fotos/tala-2.jpg"]
+        // Fotos de prueba (placeholders) de 400x600 pixeles
+        images: [
+            "https://picsum.photos/id/119/400/600", 
+            "https://picsum.photos/id/28/400/600", 
+            "https://picsum.photos/id/10/400/600"
+        ]
     },
     {
         title: "Limpieza y Perfilado",
         description: "Limpieza profunda, shapeo de veredas y despeje de senderos para un acabado perfecto.",
-        icon: "🧹",
-        images: ["/fotos/limpieza-1.jpg", "/fotos/limpieza-2.jpg"]
+        icon: "🚮🧹",
+        // Fotos de prueba (placeholders) de 400x600 pixeles
+        images: [
+            "https://picsum.photos/id/212/400/600", 
+            "https://picsum.photos/id/122/400/600", 
+            "https://picsum.photos/id/234/400/600"
+        ]
     }
 ];
 ---
@@ -49,10 +65,10 @@ const services = [
                     <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 mb-6 pb-2 no-scrollbar">
                         {service.images.map(img => (
                             <img 
-                                src={img} 
-                                alt={service.title} 
-                                class="w-full h-56 object-cover rounded-xl snap-center shrink-0 shadow-sm"
-                            />
+    src={img} 
+    alt={service.title} 
+    class="h-64 w-auto max-w-full mx-auto rounded-xl snap-center shrink-0 shadow-md"
+/>
                         ))}
                     </div>
 
