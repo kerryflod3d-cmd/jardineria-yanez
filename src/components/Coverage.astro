@@ -1,46 +1,48 @@
 ---
 // Coverage.astro
 ---
-<section id="cobertura" class="py-20 bg-white">
+<section id="cobertura" class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
     <div class="max-w-6xl mx-auto px-4">
         <div class="text-center mb-12">
-            <h2 class="text-4xl font-bold text-green-900 mb-4">Zona de Cobertura</h2>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                Ofrecemos nuestros servicios profesionales de jardinería en toda la Región del Maule, con especial atención en el tramo comprendido entre <span class="font-semibold text-green-800">Linares</span> y <span class="font-semibold text-green-800">Parral</span>.
+            <h2 class="text-4xl font-bold text-green-900 dark:text-green-400 mb-4">Zona de Cobertura</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Ofrecemos nuestros servicios profesionales de jardinería en toda la Región del Maule, con especial atención en el tramo comprendido entre <span class="font-semibold text-green-800 dark:text-green-300">Linares</span> y <span class="font-semibold text-green-800 dark:text-green-300">Parral</span>.
             </p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-            <div class="bg-white p-6 rounded-2xl shadow-md border border-green-100 space-y-4">
-                <h3 class="text-xl font-bold text-green-900 flex items-center gap-2">
+            <!-- Tarjeta de comunas con soporte para modo oscuro -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md border border-green-100 dark:border-gray-700 space-y-4 transition-colors duration-300">
+                <h3 class="text-xl font-bold text-green-900 dark:text-green-300 flex items-center gap-2">
                     <span>📍</span> Comunas Principales
                 </h3>
-                <ul class="space-y-2 text-gray-700">
+                <ul class="space-y-2 text-gray-700 dark:text-gray-300">
                     <li class="flex items-center gap-2">✓ Linares</li>
                     <li class="flex items-center gap-2">✓ Miraflores</li>
                     <li class="flex items-center gap-2">✓ Longaví</li>
                     <li class="flex items-center gap-2">✓ Retiro</li>
                     <li class="flex items-center gap-2">✓ Copihue</li>
                     <li class="flex items-center gap-2">✓ Parral</li>
-                    <li class="flex items-center gap-2 text-sm text-gray-500 italic">* Zonas urbanas y rurales cercanas</li>
+                    <li class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 italic">* Zonas urbanas y rurales cercanas</li>
                 </ul>
-                <div class="pt-4 border-t border-gray-100">
-                    <p class="text-sm text-gray-600">¿Tienes dudas sobre si llegamos a tu ubicación? Escríbenos y lo verificamos.</p>
+                <div class="pt-4 border-t border-gray-100 dark:border-gray-700">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">¿Tienes dudas sobre si llegamos a tu ubicación? Escríbenos y lo verificamos.</p>
                 </div>
             </div>
 
-            <div class="lg:col-span-2 overflow-hidden rounded-2xl shadow-xl border border-green-200 h-[400px]">
-    <!-- Mapa de Google Maps enfocado en la Provincia de Linares -->
-    <iframe 
-        src="https://maps.google.com/maps?q=Provincia%20de%20Linares,%20Maule,%20Chile&t=&z=9&ie=UTF8&iwloc=&output=embed" 
-        width="100%" 
-        height="100%" 
-        style="border:0;" 
-        allowfullscreen="" 
-        loading="lazy" 
-        referrerpolicy="no-referrer-when-downgrade"
-        title="Mapa de cobertura en la Provincia de Linares">
-    </iframe>
+            <!-- Contenedor del mapa -->
+            <div class="lg:col-span-2 overflow-hidden rounded-2xl shadow-xl border border-green-200 dark:border-gray-700 h-[400px]">
+                <!-- Mapa de Google Maps enfocado en la Provincia de Linares -->
+                <iframe 
+                    src="https://maps.google.com/maps?q=Provincia%20de%20Linares,%20Maule,%20Chile&t=&z=9&ie=UTF8&iwloc=&output=embed" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Mapa de cobertura en la Provincia de Linares">
+                </iframe>
             </div>
         </div>
     </div>

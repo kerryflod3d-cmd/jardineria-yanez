@@ -20,25 +20,27 @@ const testimonials = [
     }
 ];
 ---
-<section id="testimonios" class="py-20 bg-white">
+<!-- Fondo blanco de día, gris muy oscuro de noche -->
+<section id="testimonios" class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
     <div class="max-w-6xl mx-auto px-4">
         <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-green-900 mb-4">Lo que dicen nuestros clientes</h2>
-            <p class="text-lg text-gray-600">La satisfacción de quienes confían en nosotros es nuestra mejor carta de presentación.</p>
+            <h2 class="text-4xl font-bold text-green-900 dark:text-green-400 mb-4">Lo que dicen nuestros clientes</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300">La satisfacción de quienes confían en nosotros es nuestra mejor carta de presentación.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map(testimonial => (
-                <div class="p-8 bg-green-50/20 border border-green-100 rounded-2xl relative">
+            
+                <div class="p-8 bg-green-50/20 dark:bg-gray-800 border border-green-100 dark:border-gray-700 rounded-2xl relative transition-colors duration-300 shadow-sm">
                     <div class="flex text-yellow-500 mb-4">
-                        {Array.from({ length: testimonial.stars }).map(() => (
-                            <span>⭐</span>
+                        {Array.from({ length: testimonial.stars }).map((_, i) => (
+                            <span key={i}>⭐</span>
                         ))}
                     </div>
-                    <p class="text-gray-700 italic mb-6">"{testimonial.text}"</p>
+                    <p class="text-gray-700 dark:text-gray-300 italic mb-6">"{testimonial.text}"</p>
                     <div>
-                        <p class="font-bold text-green-900">{testimonial.name}</p>
-                        <p class="text-sm text-green-700">{testimonial.role}</p>
+                        <p class="font-bold text-green-900 dark:text-green-300">{testimonial.name}</p>
+                        <p class="text-sm text-green-700 dark:text-green-400">{testimonial.role}</p>
                     </div>
                 </div>
             ))}

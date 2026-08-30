@@ -26,23 +26,23 @@ const services = [
     },
     {
         title: "Limpieza y Perfilado",
-        description: "Limpieza profunda, chapeo de veredas y despeje de senderos para un acabado perfecto.",
+        description: "Limpieza profunda, shapeo de veredas y despeje de senderos para un acabado perfecto.",
         icon: "🚮🧹",
         images: ["/fotos/limpieza-1.jpg",  "/fotos/limpieza-2.jpg", "/fotos/limpieza-3.jpg"]
     }
 ];
 ---
 
-<section id="servicios" class="py-20 bg-white relative">
+<section id="servicios" class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300 relative">
     <div class="max-w-7xl mx-auto px-4">
         <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-green-900 mb-4">Nuestros Servicios</h2>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Ofrecemos soluciones integrales para el cuidado de tus áreas verdes con profesionalismo y dedicación.</p>
+            <h2 class="text-4xl font-bold text-green-900 dark:text-green-400 mb-4">Nuestros Servicios</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">Ofrecemos soluciones integrales para el cuidado de tus áreas verdes con profesionalismo y dedicación.</p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map(service => (
-                <div class="p-6 border border-green-100 rounded-2xl hover:shadow-xl transition-shadow bg-[#F5F5DC] flex flex-col group">
+                <div class="p-6 border border-green-100 dark:border-gray-800 rounded-2xl hover:shadow-xl transition-shadow bg-[#F5F5DC] dark:bg-gray-800 flex flex-col group">
                     
                     <!-- Carrusel de Imágenes -->
                     <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 mb-6 pb-2 no-scrollbar">
@@ -56,29 +56,22 @@ const services = [
                     </div>
 
                     <div class="text-4xl mb-4 group-hover:scale-110 transition-transform inline-block origin-left">{service.icon}</div>
-                    <h3 class="text-xl font-bold text-green-800 mb-3">{service.title}</h3>
-                    <p class="text-gray-700 leading-relaxed flex-grow">{service.description}</p>
+                    <h3 class="text-xl font-bold text-green-800 dark:text-green-300 mb-3">{service.title}</h3>
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed flex-grow">{service.description}</p>
                 </div>
             ))}
         </div>
     </div>
 
-    <!-- MODAL (Pantalla negra oculta para agrandar imágenes y navegar) -->
+    <!-- MODAL (Pantalla negra para ver fotos en grande) -->
     <div id="imageModal" class="fixed inset-0 z-[100] hidden bg-black/95 flex items-center justify-center p-4 opacity-0 transition-opacity duration-300 select-none">
-        <!-- Botón de Cerrar -->
         <button id="closeModal" class="absolute top-4 right-4 md:top-8 md:right-8 text-white text-5xl hover:text-green-400 focus:outline-none transition-colors z-[110]">&times;</button>
-        
-        <!-- Flecha Anterior -->
         <button id="prevBtn" class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-white hover:text-green-400 focus:outline-none transition-colors z-[110] p-2 hidden">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-10 h-10 md:w-14 md:h-14">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
             </svg>
         </button>
-
-        <!-- Imagen Ampliada -->
         <img id="modalImage" src="" alt="Imagen ampliada" class="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl scale-95 transition-transform duration-300" />
-        
-        <!-- Flecha Siguiente -->
         <button id="nextBtn" class="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 text-white hover:text-green-400 focus:outline-none transition-colors z-[110] p-2 hidden">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-10 h-10 md:w-14 md:h-14">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -88,14 +81,8 @@ const services = [
 </section>
 
 <style>
-    /* Clases personalizadas para ocultar la barra de desplazamiento */
-    .no-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
-    .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
 
 <script>
@@ -106,20 +93,18 @@ const services = [
     const nextBtn = document.getElementById('nextBtn');
     const images = document.querySelectorAll('.zoomable-image');
 
-    let currentGroup = [];
+    let currentGroup: HTMLImageElement[] = [];
     let currentIndex = 0;
 
-    // Abrir imagen
     images.forEach(img => {
         img.addEventListener('click', (e) => {
-            // Buscamos todas las imágenes del mismo servicio para poder navegar entre ellas
             const carousel = (e.target as HTMLElement).closest('.no-scrollbar');
             if(carousel) {
-                currentGroup = Array.from(carousel.querySelectorAll('.zoomable-image'));
-                currentIndex = currentGroup.indexOf(img as Element);
+                // Forzamos a que TypeScript reconozca cada elemento como HTMLImageElement
+                currentGroup = Array.from(carousel.querySelectorAll('.zoomable-image')) as HTMLImageElement[];
+                currentIndex = currentGroup.indexOf(img as HTMLImageElement);
             }
 
-            // Mostrar/Ocultar flechas si hay más de 1 imagen en el servicio
             if (currentGroup.length > 1) {
                 prevBtn?.classList.remove('hidden');
                 nextBtn?.classList.remove('hidden');
@@ -131,7 +116,6 @@ const services = [
             if(modalImg instanceof HTMLImageElement && img instanceof HTMLImageElement) {
                 modalImg.src = img.src;
                 modal?.classList.remove('hidden');
-                
                 setTimeout(() => {
                     modal?.classList.remove('opacity-0');
                     modalImg.classList.remove('scale-95');
@@ -141,37 +125,24 @@ const services = [
         });
     });
 
-    // Función para cambiar de imagen
-    const showImage = (index) => {
+    const showImage = (index: number) => {
         if (currentGroup.length === 0) return;
-        // Reiniciar el índice si llegamos a los extremos (efecto bucle infinito)
         if (index < 0) index = currentGroup.length - 1;
         if (index >= currentGroup.length) index = 0;
         
         currentIndex = index;
-        if(modalImg instanceof HTMLImageElement && currentGroup[currentIndex] instanceof HTMLImageElement) {
-            const nextImg = currentGroup[currentIndex] as HTMLImageElement;
-            modalImg.src = nextImg.src;
+        if(modalImg instanceof HTMLImageElement && currentGroup[currentIndex]) {
+            modalImg.src = currentGroup[currentIndex].src;
         }
     };
 
-    // Navegar con botones
-    prevBtn?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showImage(currentIndex - 1);
-    });
+    prevBtn?.addEventListener('click', (e) => { e.stopPropagation(); showImage(currentIndex - 1); });
+    nextBtn?.addEventListener('click', (e) => { e.stopPropagation(); showImage(currentIndex + 1); });
 
-    nextBtn?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showImage(currentIndex + 1);
-    });
-
-    // Cerrar Modal
     const closeModal = () => {
         modal?.classList.add('opacity-0');
         modalImg?.classList.remove('scale-100');
         modalImg?.classList.add('scale-95');
-        
         setTimeout(() => {
             modal?.classList.add('hidden');
             if(modalImg instanceof HTMLImageElement) modalImg.src = '';
@@ -180,12 +151,7 @@ const services = [
     };
 
     closeBtn?.addEventListener('click', closeModal);
-
-    modal?.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
-
-    // Soporte para teclado (Flechas y Escape)
+    modal?.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
     document.addEventListener('keydown', (e) => {
         if (!modal?.classList.contains('hidden')) {
             if (e.key === 'Escape') closeModal();
@@ -194,26 +160,13 @@ const services = [
         }
     });
 
-    // Soporte para deslizar en celulares (Touch Swipe)
     let touchStartX = 0;
     let touchEndX = 0;
-
-    modal?.addEventListener('touchstart', (e) => {
-        touchStartX = (e as TouchEvent).changedTouches[0].screenX;
-    }, { passive: true });
-
+    modal?.addEventListener('touchstart', (e) => { touchStartX = (e as TouchEvent).changedTouches[0].screenX; }, { passive: true });
     modal?.addEventListener('touchend', (e) => {
         touchEndX = (e as TouchEvent).changedTouches[0].screenX;
-        handleSwipe();
+        const threshold = 50;
+        if (touchStartX - touchEndX > threshold) showImage(currentIndex + 1);
+        if (touchEndX - touchStartX > threshold) showImage(currentIndex - 1);
     }, { passive: true });
-
-    const handleSwipe = () => {
-        const threshold = 50; // Distancia mínima para considerar que fue un "deslizamiento"
-        if (touchStartX - touchEndX > threshold) {
-            showImage(currentIndex + 1); // Deslizó a la izquierda (Siguiente)
-        }
-        if (touchEndX - touchStartX > threshold) {
-            showImage(currentIndex - 1); // Deslizó a la derecha (Anterior)
-        }
-    };
 </script>
