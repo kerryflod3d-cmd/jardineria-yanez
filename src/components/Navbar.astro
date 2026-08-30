@@ -4,10 +4,11 @@
 <nav class="bg-green-700/95 dark:bg-gray-900/95 backdrop-blur-sm text-white shadow-md sticky top-0 z-50 transition-colors duration-300">
     <div class="w-full flex justify-between items-center px-3 py-3">
         
-        <!-- SECCIÓN CLIMA Y FECHA ADAPTATIVA -->
+        <!-- SECCIÓN CLIMA Y FECHA OPTIMIZADA PARA iOS -->
         <div class="flex-1 overflow-hidden mr-2 flex items-center">
             <div class="w-full text-white/95 text-xs sm:text-sm md:text-lg font-medium whitespace-nowrap overflow-hidden">
-                <div class="inline-block animate-marquee">
+                <!-- Inicialmente sin animación para que iOS pinte el texto completo primero -->
+                <div id="ticker-container" class="inline-block">
                     <span id="clima-ticker">Consultando fecha y clima... 🌤️</span>
                 </div>
             </div>
@@ -48,14 +49,20 @@
 </nav>
 
 <style>
-    .animate-marquee {
+    /* La clase que aplicaremos dinámicamente solo cuando el texto ya esté listo */
+    .animate-marquee-ios {
         display: inline-block;
         padding-left: 100%;
-        animation: marquee 35s linear infinite;
+        animation: marquee 45s linear infinite;
+        -webkit-animation: marquee 45s linear infinite;
     }
     @keyframes marquee {
-        0% { transform: translate(0, 0); }
-        100% { transform: translate(-100%, 0); }
+        0% { transform: translate3d(0, 0, 0); }
+        100% { transform: translate3d(-100%, 0, 0); }
+    }
+    @-webkit-keyframes marquee {
+        0% { transform: translate3d(0, 0, 0); }
+        100% { transform: translate3d(-100%, 0, 0); }
     }
 </style>
 
@@ -89,22 +96,31 @@
         link.addEventListener('click', () => { menu?.classList.add('hidden'); });
     });
 
-    // Lógica Clima y Fecha
+    // Lógica Clima y Fecha optimizada para iOS
     async function cargarClimaYFecha() {
         try {
-            let fecha = new Date().toLocaleDateString('es-CL', { weekday: 'long', day: 'numeric', month: 'short' });
+            let fecha = new Date().toLocaleDateString('es-CL', { weekday: 'short', day: 'numeric', month: 'short' });
             fecha = fecha.charAt(0).toUpperCase() + fecha.slice(1);
             const respuesta = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-36.05&longitude=-71.77&current_weather=true');
             const datos = await respuesta.json();
             const temp = Math.round(datos.current_weather.temperature);
             
-            // Texto adaptado con nombres de ciudades un poco más compactos para que fluyan perfectamente en móviles
-            const texto = `📅 ${fecha} &nbsp;&nbsp;|&nbsp;&nbsp; ☀️ Retiro: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Parral: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Longaví: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Linares: ${temp}°C`;
+            const texto = `Fecha:  ${fecha} &nbsp;&nbsp;|&nbsp;&nbsp; ☀️ Retiro: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Copihue: ${temp + 1}°C &nbsp;&nbsp;|&nbsp;&nbsp; Parral: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Longaví: ${temp}°C &nbsp;&nbsp;|&nbsp;&nbsp; Linares: ${temp}°C`;
+            
             const ticker = document.getElementById('clima-ticker');
+            const container = document.getElementById('ticker-container');
+            
             if (ticker) ticker.innerHTML = texto;
+            
+            // Activamos la animación de Safari solo después de que el texto final ya se insertó
+            if (container) {
+                container.classList.add('animate-marquee-ios');
+            }
         } catch (error) {
             const ticker = document.getElementById('clima-ticker');
+            const container = document.getElementById('ticker-container');
             if (ticker) ticker.innerHTML = "🌱 Clima ideal para cuidar tu jardín";
+            if (container) container.classList.add('animate-marquee-ios');
         }
     }
     cargarClimaYFecha();
