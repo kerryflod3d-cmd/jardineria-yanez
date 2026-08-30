@@ -25,7 +25,7 @@
         
         <!-- Grupo de botones derecho -->
         <div class="flex items-center shrink-0">
-            <!-- BOTÓN MODO NOCHE -->
+            <!-- BOTÓN MODO NOCHE (ESCRITORIO) -->
             <button id="theme-toggle" class="text-2xl p-2 hover:scale-110 transition-transform focus:outline-none" aria-label="Cambiar tema">
                 <span id="theme-icon">🌙</span>
             </button>
@@ -38,13 +38,25 @@
     </div>
 
     <!-- Menú móvil desplegable -->
-    <div id="mobile-menu" class="hidden md:hidden pt-4 pb-2 border-t border-green-600 dark:border-gray-700 mt-1 px-4 bg-green-800 dark:bg-gray-800 transition-colors duration-300">
-        <ul class="flex flex-col space-y-3 font-medium text-center">
-            <li><a href="#" class="block py-2 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition">Inicio</a></li>
-            <li><a href="#servicios" class="block py-2 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition">Servicios</a></li>
-            <li><a href="#testimonios" class="block py-2 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition">Testimonios</a></li>
-            <li><a href="#cobertura" class="block py-2 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition">Cobertura</a></li>
-            <li><a href="#contacto" class="block py-2 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition">Contacto</a></li>
+    <div id="mobile-menu" class="hidden md:hidden pt-3 pb-3 border-t border-green-600 dark:border-gray-700 mt-1 px-4 bg-green-800 dark:bg-gray-800 transition-colors duration-300">
+        <ul class="flex flex-col space-y-2 font-medium text-center">
+            <li><a href="#" class="block py-1.5 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition">Inicio</a></li>
+            <li><a href="#servicios" class="block py-1.5 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition">Servicios</a></li>
+            <li><a href="#testimonios" class="block py-1.5 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition">Testimonios</a></li>
+            <li><a href="#cobertura" class="block py-1.5 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition">Cobertura</a></li>
+            <li><a href="#contacto" class="block py-1.5 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition">Contacto</a></li>
+            
+            <!-- SWITCH DE MODO OSCURO CENTRADO Y COMPACTO -->
+            <li class="pt-2 mt-1 border-t border-green-600/60 dark:border-gray-700 flex justify-center">
+                <div class="w-full max-w-[200px] flex items-center justify-between px-3 py-1.5 bg-green-900/30 dark:bg-gray-700/30 rounded-lg">
+                    <span class="text-sm font-medium">Modo Oscuro</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="theme-switch-mobile" class="sr-only peer">
+                        <div class="w-10 h-5 bg-gray-500 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-500"></div>
+                        <span id="theme-switch-label" class="ml-2 text-xs font-bold uppercase w-5 text-left">Off</span>
+                    </label>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>
@@ -67,26 +79,41 @@
 </style>
 
 <script>
-    // Lógica del Modo Noche
+    // Lógica Sincronizada del Modo Noche (Escritorio y Switch Móvil)
     const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeSwitchMobile = document.getElementById('theme-switch-mobile') as HTMLInputElement;
+    const themeSwitchLabel = document.getElementById('theme-switch-label');
     const themeIcon = document.getElementById('theme-icon');
 
-    if (document.documentElement.classList.contains('dark')) {
-        if(themeIcon) themeIcon.textContent = '☀️';
-    } else {
-        if(themeIcon) themeIcon.textContent = '🌙';
+    function actualizarUI(isDark: boolean) {
+        if (isDark) {
+            if(themeIcon) themeIcon.textContent = '☀️';
+            if(themeSwitchMobile) themeSwitchMobile.checked = true;
+            if(themeSwitchLabel) themeSwitchLabel.textContent = 'On';
+        } else {
+            if(themeIcon) themeIcon.textContent = '🌙';
+            if(themeSwitchMobile) themeSwitchMobile.checked = false;
+            if(themeSwitchLabel) themeSwitchLabel.textContent = 'Off';
+        }
     }
 
-    themeToggleBtn?.addEventListener('click', function() {
+    // Estado inicial al cargar la página
+    const isDarkInitial = document.documentElement.classList.contains('dark');
+    actualizarUI(isDarkInitial);
+
+    function alternarTema() {
         document.documentElement.classList.toggle('dark');
-        if (document.documentElement.classList.contains('dark')) {
+        const isDark = document.documentElement.classList.contains('dark');
+        if (isDark) {
             localStorage.setItem('theme', 'dark');
-            if(themeIcon) themeIcon.textContent = '☀️';
         } else {
             localStorage.setItem('theme', 'light');
-            if(themeIcon) themeIcon.textContent = '🌙';
         }
-    });
+        actualizarUI(isDark);
+    }
+
+    themeToggleBtn?.addEventListener('click', alternarTema);
+    themeSwitchMobile?.addEventListener('change', alternarTema);
 
     // Lógica Menú Móvil
     const btn = document.getElementById('menu-btn');
@@ -148,7 +175,6 @@
     // Lógica Clima y Fecha con año incluido y bucle continuo en iPhone
     async function cargarClimaYFecha() {
         try {
-            // Agregamos year: 'numeric' para que muestre el año actual (ej. 2026)
             let fecha = new Date().toLocaleDateString('es-CL', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
             fecha = fecha.charAt(0).toUpperCase() + fecha.slice(1);
             
