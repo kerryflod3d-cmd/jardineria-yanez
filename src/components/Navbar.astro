@@ -1,7 +1,7 @@
 ---
 // Navbar.astro
 ---
-<nav class="bg-green-700/95 dark:bg-gray-900/95 backdrop-blur-sm text-white shadow-md sticky top-0 z-50 transition-colors duration-300">
+<nav class="bg-green-700/95 dark:bg-gray-900/95 backdrop-blur-sm text-white shadow-md fixed w-full top-0 left-0 z-50 transition-colors duration-300">
     <div class="w-full flex justify-between items-center px-3 py-3">
         
         <!-- SECCIÓN CLIMA Y FECHA BLINDADA PARA iOS -->
@@ -164,11 +164,11 @@
             case 77: return '❄️'; 
             case 80:
             case 81:
-            case 82: return '🌦️'; 
+            case 82: return '🌦️️'; 
             case 95:
             case 96:
             case 99: return '⚡'; 
-            default: return '🌤️';
+            default: return '🌤️️';
         }
     }
 
