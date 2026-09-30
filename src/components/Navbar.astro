@@ -2,7 +2,7 @@
 // Navbar.astro
 ---
 <nav class="bg-green-700/95 dark:bg-gray-900/95 backdrop-blur-sm text-white shadow-md fixed w-full top-0 left-0 z-50 transition-colors duration-300">
-    <div class="w-full flex justify-between items-center px-3 py-3">
+    <div class="w-full flex justify-between items-center px-3 py-1.5">
         
         <!-- SECCIÓN CLIMA Y FECHA BLINDADA PARA iOS -->
         <div class="flex-1 overflow-hidden mr-2 flex items-center">
@@ -20,40 +20,40 @@
             <li><a href="#servicios" class="hover:text-green-200 transition">Servicios</a></li>
             <li><a href="#testimonios" class="hover:text-green-200 transition">Testimonios</a></li>
             <li><a href="#cobertura" class="hover:text-green-200 transition">Cobertura</a></li>
-            <li><a href="#contacto" class="hover:text-green-200 transition border-2 border-white/30 px-4 py-1 rounded-full hover:bg-white hover:text-green-700 transition-all">Contacto</a></li>
+            <li><a href="#contacto" class="hover:text-green-200 transition border-2 border-white/30 px-4 py-1 rounded-full hover:bg-white hover:text-green-700 transition-all text-sm">Contacto</a></li>
         </ul>
         
         <!-- Grupo de botones derecho -->
         <div class="flex items-center shrink-0">
             <!-- BOTÓN MODO NOCHE (ESCRITORIO) -->
-            <button id="theme-toggle" class="text-2xl p-2 hover:scale-110 transition-transform focus:outline-none" aria-label="Cambiar tema">
+            <button id="theme-toggle" class="text-xl p-1.5 hover:scale-110 transition-transform focus:outline-none" aria-label="Cambiar tema">
                 <span id="theme-icon">🌙</span>
             </button>
 
             <!-- Botón móvil -->
-            <button id="menu-btn" class="md:hidden text-2xl focus:outline-none p-2 ml-1" aria-label="Abrir menú">
+            <button id="menu-btn" class="md:hidden text-xl focus:outline-none p-1.5 ml-1" aria-label="Abrir menú">
                 ☰
             </button>
         </div>
     </div>
 
     <!-- Menú móvil desplegable -->
-    <div id="mobile-menu" class="hidden md:hidden pt-3 pb-3 border-t border-green-600 dark:border-gray-700 mt-1 px-4 bg-green-800 dark:bg-gray-800 transition-colors duration-300">
-        <ul class="flex flex-col space-y-2 font-medium text-center">
-            <li><a href="#" class="block py-1.5 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition">Inicio</a></li>
-            <li><a href="#servicios" class="block py-1.5 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition">Servicios</a></li>
-            <li><a href="#testimonios" class="block py-1.5 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition">Testimonios</a></li>
-            <li><a href="#cobertura" class="block py-1.5 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition">Cobertura</a></li>
-            <li><a href="#contacto" class="block py-1.5 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition">Contacto</a></li>
+    <div id="mobile-menu" class="hidden md:hidden pt-2 pb-2 border-t border-green-600 dark:border-gray-700 px-4 bg-green-800 dark:bg-gray-800 transition-colors duration-300">
+        <ul class="flex flex-col space-y-1.5 font-medium text-center">
+            <li><a href="#" class="block py-1.5 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition text-sm">Inicio</a></li>
+            <li><a href="#servicios" class="block py-1.5 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition text-sm">Servicios</a></li>
+            <li><a href="#testimonios" class="block py-1.5 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition text-sm">Testimonios</a></li>
+            <li><a href="#cobertura" class="block py-1.5 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition text-sm">Cobertura</a></li>
+            <li><a href="#contacto" class="block py-1.5 hover:bg-green-700 dark:hover:bg-gray-700 rounded transition text-sm">Contacto</a></li>
             
             <!-- SWITCH DE MODO OSCURO CENTRADO Y COMPACTO -->
             <li class="pt-2 mt-1 border-t border-green-600/60 dark:border-gray-700 flex justify-center">
-                <div class="w-full max-w-[200px] flex items-center justify-between px-3 py-1.5 bg-green-900/30 dark:bg-gray-700/30 rounded-lg">
-                    <span class="text-sm font-medium">Modo Oscuro</span>
+                <div class="w-full max-w-[180px] flex items-center justify-between px-3 py-1 bg-green-900/30 dark:bg-gray-700/30 rounded-lg">
+                    <span class="text-xs font-medium">Modo Oscuro</span>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" id="theme-switch-mobile" class="sr-only peer">
-                        <div class="w-10 h-5 bg-gray-500 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-500"></div>
-                        <span id="theme-switch-label" class="ml-2 text-xs font-bold uppercase w-5 text-left">Off</span>
+                        <div class="w-8 h-4 bg-gray-500 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-green-500"></div>
+                        <span id="theme-switch-label" class="ml-2 text-[10px] font-bold uppercase w-4 text-left">Off</span>
                     </label>
                 </div>
             </li>
@@ -81,11 +81,11 @@
 <script>
     // Lógica Sincronizada del Modo Noche (Escritorio y Switch Móvil)
     const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeSwitchMobile = document.getElementById('theme-switch-mobile') as HTMLInputElement;
+    const themeSwitchMobile = document.getElementById('theme-switch-mobile');
     const themeSwitchLabel = document.getElementById('theme-switch-label');
     const themeIcon = document.getElementById('theme-icon');
 
-    function actualizarUI(isDark: boolean) {
+    function actualizarUI(isDark) {
         if (isDark) {
             if(themeIcon) themeIcon.textContent = '☀️';
             if(themeSwitchMobile) themeSwitchMobile.checked = true;
@@ -124,7 +124,7 @@
     });
 
     // Función para convertir el código de Open-Meteo en un emoji considerando si es de día o de noche
-    function obtenerEmojiClima(code: number, isDay: number): string {
+    function obtenerEmojiClima(code, isDay) {
         if (isDay === 0) {
             switch (code) {
                 case 0: return '🌙'; 
@@ -164,11 +164,11 @@
             case 77: return '❄️'; 
             case 80:
             case 81:
-            case 82: return '🌦️️'; 
+            case 82: return '🌦'; 
             case 95:
             case 96:
             case 99: return '⚡'; 
-            default: return '🌤️️';
+            default: return '🌤';
         }
     }
 
