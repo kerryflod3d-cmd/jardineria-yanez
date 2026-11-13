@@ -1,0 +1,60 @@
+---
+import { weatherLocations } from '../../data/weather.mjs';
+---
+<div class="border-b border-emerald-200/10 bg-[#126c39] text-white" aria-label="Pronóstico del tiempo para sectores del Maule">
+  <div class="container-site flex min-h-11 items-center gap-3 py-1.5 sm:gap-5">
+    <span class="shrink-0 text-xs font-extrabold uppercase tracking-wider"><span aria-hidden="true">🌤</span> Clima</span>
+    <div class="weather-ticker-window min-w-0 flex-1" role="region" aria-label="Pronóstico en Retiro, Copihue, Parral, Longaví y Linares. Detén la animación colocando el cursor encima." tabindex="0">
+      <div class="weather-ticker-marquee flex w-max items-center whitespace-nowrap text-xs font-semibold sm:text-sm">
+        <div class="weather-ticker-group flex shrink-0 items-center gap-6 pr-6">
+          {weatherLocations.map((place) => <span class="inline-flex shrink-0 items-center gap-1.5" data-weather={place.id}>
+            <span>{place.name}:</span><span data-forecast aria-label="Consultando pronóstico">—</span>
+          </span>)}
+        </div>
+        <div class="weather-ticker-group flex shrink-0 items-center gap-6 pr-6" aria-hidden="true">
+          {weatherLocations.map((place) => <span class="inline-flex shrink-0 items-center gap-1.5" data-weather={place.id}>
+            <span>{place.name}:</span><span data-forecast>—</span>
+          </span>)}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  import { weatherLocations, WEATHER_CACHE_MS, parseForecast } from '../../data/weather.mjs';
+  const prefix = 'jy_weather_';
+  function setForecast(id: string, value: { temperature: number; symbol: string } | null) {
+    document.querySelectorAll<HTMLElement>(`[data-weather="${id}"] [data-forecast]`).forEach((slot) => {
+      slot.textContent = value ? `${value.temperature}°C ${value.symbol}` : '—';
+      slot.setAttribute('aria-label', value ? `${value.temperature} grados Celsius, pronóstico meteorológico` : 'Pronóstico no disponible');
+    });
+  }
+  async function loadPlace(place: typeof weatherLocations[number]) {
+    const key = prefix + place.id;
+    try {
+      const previous = JSON.parse(localStorage.getItem(key) || 'null');
+      if (previous && Date.now() - previous.timestamp < WEATHER_CACHE_MS) {
+        setForecast(place.id, previous.data);
+        return;
+      }
+    } catch { /* Se consulta el dato si el almacenamiento está restringido. */ }
+    try {
+      const url = new URL('https://api.met.no/weatherapi/locationforecast/2.0/compact');
+      url.searchParams.set('lat', String(place.lat));
+      url.searchParams.set('lon', String(place.lon));
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 9000);
+      let response: Response;
+      try { response = await fetch(url, { signal: controller.signal }); }
+      finally { window.clearTimeout(timeout); }
+      if (!response.ok) throw Error(`MET Norway: ${response.status}`);
+      const data = parseForecast(await response.json());
+      setForecast(place.id, data);
+      try { localStorage.setItem(key, JSON.stringify({ timestamp: Date.now(), data })); } catch { /* La caché es opcional. */ }
+    } catch {
+      setForecast(place.id, null);
+    }
+  }
+  // Fuera de Noruega, el proveedor aconseja no repetir consultas idénticas durante tres horas.
+  weatherLocations.forEach((place) => { void loadPlace(place); });
+</script>

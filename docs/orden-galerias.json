@@ -1,0 +1,197 @@
+{
+  "cesped": [
+    {
+      "id": "mantenimiento-cesped-01",
+      "type": "image",
+      "original": "cesped-1.jpg"
+    },
+    {
+      "id": "mantenimiento-cesped-02",
+      "type": "image",
+      "original": "cesped-2.jpg"
+    },
+    {
+      "id": "mantenimiento-cesped-03",
+      "type": "image",
+      "original": "cesped-3.jpg"
+    },
+    {
+      "id": "mantenimiento-cesped-04",
+      "type": "image",
+      "original": "cesped-4.jpg"
+    },
+    {
+      "id": "mantenimiento-cesped-05",
+      "type": "image",
+      "original": "cesped-5.jpg"
+    },
+    {
+      "id": "mantenimiento-cesped-06",
+      "type": "image",
+      "original": "cesped-7.jpg"
+    },
+    {
+      "id": "mantenimiento-cesped-07",
+      "type": "image",
+      "original": "cesped-9.jpg"
+    },
+    {
+      "id": "mantenimiento-cesped-08",
+      "type": "image",
+      "original": "cesped-10.jpg"
+    }
+  ],
+  "poda": [
+    {
+      "id": "poda-ornamental-01",
+      "type": "video",
+      "original": "poda-1.mp4"
+    },
+    {
+      "id": "poda-ornamental-02",
+      "type": "image",
+      "original": "poda-1.jpg"
+    },
+    {
+      "id": "poda-ornamental-03",
+      "type": "image",
+      "original": "poda-3.jpg"
+    },
+    {
+      "id": "poda-ornamental-04",
+      "type": "image",
+      "original": "poda-4.jpg"
+    }
+  ],
+  "retiro": [
+    {
+      "id": "retiro-restos-01",
+      "type": "image",
+      "original": "escombros-1.jpg"
+    },
+    {
+      "id": "retiro-restos-02",
+      "type": "image",
+      "original": "escombros-2.jpg"
+    },
+    {
+      "id": "retiro-restos-03",
+      "type": "image",
+      "original": "escombros-3.jpg"
+    }
+  ],
+  "arboles": [
+    {
+      "id": "tala-despeje-01",
+      "type": "image",
+      "original": "tala-1.jpg"
+    },
+    {
+      "id": "tala-despeje-02",
+      "type": "image",
+      "original": "tala-2.jpg"
+    },
+    {
+      "id": "tala-despeje-03",
+      "type": "image",
+      "original": "tala-3.jpg"
+    }
+  ],
+  "ligustrinas": [
+    {
+      "id": "perfilado-ligustrinas-01",
+      "type": "video",
+      "original": "poda-4.1.mp4"
+    },
+    {
+      "id": "perfilado-ligustrinas-02",
+      "type": "image",
+      "original": "poda-4.2.jpg"
+    },
+    {
+      "id": "perfilado-ligustrinas-03",
+      "type": "image",
+      "original": "poda-4.5.jpg"
+    },
+    {
+      "id": "perfilado-ligustrinas-04",
+      "type": "image",
+      "original": "poda-4.3.jpg"
+    },
+    {
+      "id": "perfilado-ligustrinas-05",
+      "type": "image",
+      "original": "poda-4.6.jpg"
+    },
+    {
+      "id": "perfilado-ligustrinas-06",
+      "type": "image",
+      "original": "ligus-6.jpg"
+    },
+    {
+      "id": "perfilado-ligustrinas-07",
+      "type": "image",
+      "original": "ligus-7.jpg"
+    },
+    {
+      "id": "perfilado-ligustrinas-08",
+      "type": "video",
+      "original": "poda-4.4.mp4"
+    },
+    {
+      "id": "perfilado-ligustrinas-09",
+      "type": "video",
+      "original": "poda-5.mp4"
+    },
+    {
+      "id": "perfilado-ligustrinas-10",
+      "type": "image",
+      "original": "poda-5.1.jpg"
+    },
+    {
+      "id": "perfilado-ligustrinas-11",
+      "type": "image",
+      "original": "poda-5.2.jpg"
+    },
+    {
+      "id": "perfilado-ligustrinas-12",
+      "type": "image",
+      "original": "poda-5.3.jpg"
+    },
+    {
+      "id": "perfilado-ligustrinas-13",
+      "type": "image",
+      "original": "poda-5.4.jpg"
+    },
+    {
+      "id": "perfilado-ligustrinas-14",
+      "type": "image",
+      "original": "poda-5.5.jpg"
+    },
+    {
+      "id": "perfilado-ligustrinas-15",
+      "type": "image",
+      "original": "limp-001.jpg"
+    },
+    {
+      "id": "perfilado-ligustrinas-16",
+      "type": "image",
+      "original": "limp-002.jpg"
+    },
+    {
+      "id": "perfilado-ligustrinas-17",
+      "type": "image",
+      "original": "limp-003.jpg"
+    },
+    {
+      "id": "perfilado-ligustrinas-18",
+      "type": "image",
+      "original": "limp-004.jpg"
+    },
+    {
+      "id": "perfilado-ligustrinas-19",
+      "type": "image",
+      "original": "limp-005.jpg"
+    }
+  ]
+}

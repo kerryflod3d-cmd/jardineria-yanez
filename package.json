@@ -1,19 +1,23 @@
 {
-  "name": "web-tavo",
+  "name": "jardineria-yanez",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.19.0"
   },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "validate": "node --experimental-strip-types tools/validate.mjs",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "qa": "npm run validate && npm test && npm run build",
     "astro": "astro"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.2",
     "tailwindcss": "^4.3.3"
-  }
+  },
+  "private": true
 }

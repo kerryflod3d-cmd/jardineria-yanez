@@ -1,0 +1,25 @@
+---
+import { whatsappUrl } from '../../config/site';
+---
+<section class="relative isolate overflow-hidden bg-[#143723] text-white" aria-labelledby="hero-title">
+  <picture aria-hidden="true" class="absolute inset-0 -z-20 block h-full w-full">
+    <source media="(min-width: 800px)" srcset="/media/hero-1600.webp" />
+    <img src="/media/hero-720.webp" alt="" width="720" height="540" fetchpriority="high" class="h-full w-full object-cover object-[45%_center]" />
+  </picture>
+  <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-r from-[#092318]/95 via-[#0e2e20]/88 to-[#102b1d]/55 max-lg:bg-gradient-to-b max-lg:from-[#0b291c]/88 max-lg:via-[#102f20]/82 max-lg:to-[#0d291c]/90"></div>
+  <div class="container-site flex min-h-[610px] items-center py-20 sm:min-h-[670px] sm:py-24 lg:min-h-[690px]">
+    <div class="max-w-4xl">
+      <h1 id="hero-title" class="max-w-[13ch] text-[clamp(2.75rem,7.3vw,5.8rem)] font-black leading-[1.04] tracking-[-.048em] drop-shadow-lg">
+        Creciendo <span class="text-[#c5e5a4]">tu Jardín,</span> Cuidando <span class="text-[#c5e5a4]">tu Hogar</span>
+      </h1>
+      <p class="mt-7 max-w-2xl text-lg leading-8 text-white/95 drop-shadow-sm sm:text-xl">Diseño, mantenimiento y cuidado profesional de áreas verdes. Transforma tu espacio exterior en un oasis de paz y naturaleza.</p>
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+        <a href="#contacto" class="btn bg-[#079b49] text-white shadow-sm hover:bg-[#087b3d]">Solicitar Presupuesto Gratis <span aria-hidden="true">↗</span></a>
+        <a href="#servicios" class="btn btn-light">Ver Servicios <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-white/30 pt-6 text-sm font-medium text-emerald-50">
+        <span>✓ Atención personalizada</span><span>✓ Presupuesto sin costo</span><span>✓ Cobertura local</span>
+      </div>
+    </div>
+  </div>
+</section>

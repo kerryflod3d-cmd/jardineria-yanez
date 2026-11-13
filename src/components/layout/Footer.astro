@@ -1,0 +1,24 @@
+---
+import { site } from '../../config/site';
+const year = new Date().getFullYear();
+---
+<footer class="relative isolate overflow-hidden bg-[#101827] py-16 text-stone-300 sm:py-20">
+  <div class="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center" aria-hidden="true">
+    <img src="/media/logo.webp" width="500" height="500" loading="lazy" alt="" class="h-auto w-[min(90vw,500px)] rounded-full opacity-[0.12]" />
+  </div>
+  <div class="container-site relative mx-auto max-w-5xl text-center">
+    <h2 class="text-3xl font-extrabold text-white sm:text-4xl">{site.name}</h2>
+    <p class="mx-auto mt-4 max-w-2xl text-lg leading-8 text-stone-300">Un jardín cuidado no es solo un espacio verde; es el alma de tu hogar.</p>
+    <div class="mt-10 grid gap-6 rounded-2xl border border-white/10 bg-[#111d2b]/45 p-6 text-left backdrop-blur-[2px] md:grid-cols-3 md:p-8">
+      <div><h3 class="font-bold text-[#a6dfa6]">🌱 Bienestar instantáneo</h3><p class="mt-2 text-sm leading-7 text-stone-300">Regala un refugio de paz y desconexión que reduce el estrés a solo unos pasos de la puerta.</p></div>
+      <div><h3 class="font-bold text-[#a6dfa6]">✨ Estética y valor</h3><p class="mt-2 text-sm leading-7 text-stone-300">Eleva la elegancia de tu propiedad y causa una primera impresión inolvidable.</p></div>
+      <div><h3 class="font-bold text-[#a6dfa6]">🌿 Vida y energía</h3><p class="mt-2 text-sm leading-7 text-stone-300">Atrae biodiversidad, mejora la calidad del aire y llena tu día a día de frescura y color.</p></div>
+    </div>
+    <blockquote class="mx-auto mt-9 max-w-2xl text-base leading-8 text-stone-300 italic">“Tu jardín es tu conexión directa con la naturaleza; Cuídalo y transforma cada rincón en un oasis de vida.”</blockquote>
+    <nav aria-label="Enlaces del pie de página" class="mt-9 flex flex-wrap justify-center gap-x-7 gap-y-3 border-y border-white/15 py-6 text-sm font-medium">
+      <a href="/" class="hover:text-white hover:underline">Inicio</a><a href="/#servicios" class="hover:text-white hover:underline">Servicios</a><a href="/#testimonios" class="hover:text-white hover:underline">Testimonios</a><a href="/#contacto" class="hover:text-white hover:underline">Contacto</a>
+    </nav>
+    <div class="mt-6 flex flex-col justify-center gap-2 text-xs text-stone-400 sm:flex-row sm:gap-6"><p>© {year} {site.name}. Todos los derechos reservados.</p><a href="/privacidad/" class="hover:text-white hover:underline">Privacidad y formularios</a></div>
+    <p class="mt-4 text-[11px] text-stone-400">Pronósticos: <a href="https://www.met.no/en" target="_blank" rel="noopener noreferrer" class="underline-offset-2 hover:text-white hover:underline">MET Norway</a> · Datos sujetos a <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" class="underline-offset-2 hover:text-white hover:underline">CC BY 4.0</a>. Temperaturas estimadas, redondeadas al grado.</p>
+  </div>
+</footer>

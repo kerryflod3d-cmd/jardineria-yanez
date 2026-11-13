@@ -1,0 +1,80 @@
+---
+import { testimonials } from '../../data/testimonials';
+import { site } from '../../config/site';
+---
+<section id="testimonios" class="bg-white py-18 dark:bg-[#15271e] sm:py-24" aria-labelledby="testimonials-title">
+  <div class="container-site">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 id="testimonials-title" class="section-title">Lo que dicen nuestros clientes</h2>
+      <p class="section-lead mx-auto">La satisfacción de quienes confían en nosotros es nuestra mejor carta de presentación.</p>
+    </div>
+    <div data-carousel class="mt-10">
+      <div data-carousel-track tabindex="0" role="region" aria-label="Opiniones de clientes; desliza horizontalmente para leerlas" class="media-carousel flex snap-x snap-mandatory gap-5 overflow-x-auto pb-5">
+        {testimonials.map((item) => <figure class="flex w-[min(85vw,370px)] shrink-0 snap-start flex-col justify-between rounded-2xl border border-[#dbe7d9] bg-[#f8fcf7] p-6 shadow-sm dark:border-white/10 dark:bg-[#203729] sm:w-[380px] sm:p-8">
+          <div>
+            <span class="text-lg tracking-[.15em] text-amber-500" aria-label={`${item.rating} de 5 estrellas`}>{'★'.repeat(item.rating)}<span class="text-stone-300 dark:text-stone-600">{'★'.repeat(5-item.rating)}</span></span>
+            <blockquote class="mt-5 text-base leading-8 text-stone-700 italic dark:text-stone-200">“{item.quote}”</blockquote>
+          </div>
+          <figcaption class="mt-7 border-t border-stone-200 pt-5 dark:border-white/10"><span class="block font-extrabold text-[#173d2b] dark:text-white">{item.name}</span><span class="text-sm text-stone-500 dark:text-stone-300">{item.service}</span></figcaption>
+        </figure>)}
+      </div>
+      <div class="flex items-center justify-between py-1"><span data-carousel-count class="text-sm text-stone-600 dark:text-stone-300">1 de {testimonials.length}</span><div class="flex gap-2"><button type="button" data-carousel-prev class="carousel-arrow" aria-label="Reseña anterior" disabled>←</button><button type="button" data-carousel-next class="carousel-arrow" aria-label="Reseña siguiente">→</button></div></div>
+    </div>
+    <div class="mx-auto mt-14 max-w-2xl rounded-[1.8rem] border border-[#bee9c4] bg-[#effbf1] p-5 shadow-sm dark:border-emerald-900 dark:bg-[#1c392a] sm:p-9">
+      <div class="mb-7 text-center"><h3 class="text-2xl font-extrabold text-[#13552c] dark:text-emerald-200 sm:text-3xl">Déjanos tu opinión</h3><p class="mt-2 text-sm text-stone-600 dark:text-stone-300">¿Trabajamos en tu jardín? Cuéntanos tu experiencia.</p></div>
+      <form id="review-form" action={`https://formsubmit.co/${site.email}`} method="POST" data-ajax={`https://formsubmit.co/ajax/${site.email}`} class="grid gap-4">
+        <input type="hidden" name="_subject" value="Nueva reseña desde Jardinería Yáñez" />
+        <div class="hidden" aria-hidden="true"><label>Dejar vacío <input name="_honey" tabindex="-1" autocomplete="off" /></label></div>
+        <fieldset class="mb-1"><legend class="sr-only">Valoración del servicio</legend>
+          <div id="review-stars" class="flex justify-center gap-1 sm:gap-2">
+            {[1,2,3,4,5].map((n) => <label class="rating-star relative grid h-12 w-12 cursor-pointer place-items-center rounded-lg focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-emerald-700" data-rating-star={n} title={`${n} de 5 estrellas`}>
+              <input type="radio" class="sr-only" name="Estrellas" value={n} aria-label={`${n} de 5 estrellas`} checked={n === 5} />
+              <span aria-hidden="true" class="text-[2.2rem] leading-none">★</span>
+            </label>)}
+          </div>
+        </fieldset>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div><label for="review-name" class="sr-only">Tu nombre</label><input id="review-name" class="input" name="Nombre" autocomplete="name" maxlength="80" required placeholder="Tu nombre" /></div>
+          <div><label for="review-service" class="sr-only">Servicio realizado</label><input id="review-service" class="input" name="Servicio" maxlength="100" required placeholder="Servicio (ej. Poda, Diseño)" /></div>
+        </div>
+        <div><label for="review-text" class="sr-only">Tu reseña</label><textarea class="input min-h-30 resize-y" name="Comentario" id="review-text" rows="4" minlength="15" maxlength="2000" required placeholder="Escribe tu reseña aquí..."></textarea></div>
+        <button type="submit" class="btn w-full rounded-xl bg-[#079b49] font-extrabold text-white shadow-sm hover:bg-[#087b3d] disabled:cursor-wait disabled:opacity-60">Enviar Reseña</button>
+        <p id="review-status" role="status" aria-live="polite" class="text-center text-sm font-semibold" hidden></p>
+      </form>
+    </div>
+  </div>
+</section>
+<script>
+  import { sendForm } from '../../lib/form-submit.mjs';
+  const stars = document.querySelectorAll<HTMLLabelElement>('[data-rating-star]');
+  const updateStars = () => {
+    const selected = Number(document.querySelector<HTMLInputElement>('#review-stars input:checked')?.value ?? '5');
+    stars.forEach((star) => star.classList.toggle('is-active', Number(star.dataset.ratingStar) <= selected));
+  };
+  document.querySelectorAll<HTMLInputElement>('#review-stars input').forEach((input) => input.addEventListener('change', updateStars));
+  updateStars();
+
+  const form = document.querySelector<HTMLFormElement>('#review-form');
+  const status = document.querySelector<HTMLElement>('#review-status');
+  const submit = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form.reportValidity() || !status || !submit) return;
+    const data = Object.fromEntries(new FormData(form).entries());
+    if (data._honey) return;
+    submit.disabled = true;
+    submit.textContent = 'Enviando…';
+    status.hidden = false;
+    status.className = 'text-center text-sm font-semibold text-stone-600 dark:text-stone-200';
+    status.textContent = 'Enviando tu reseña…';
+    try {
+      await sendForm(form.dataset.ajax || '', data);
+      status.className = 'text-center text-sm font-semibold text-emerald-800 dark:text-emerald-200';
+      status.textContent = '¡Gracias por tu opinión!';
+      form.reset(); updateStars();
+    } catch (error) {
+      status.className = 'text-center text-sm font-semibold text-red-700 dark:text-red-300';
+      status.textContent = error instanceof Error ? error.message : 'No se pudo enviar. Inténtalo nuevamente.';
+    } finally { submit.disabled = false; submit.textContent = 'Enviar Reseña'; }
+  });
+</script>
