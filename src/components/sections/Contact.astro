@@ -1,5 +1,6 @@
 ---
 import { site, whatsappUrl } from '../../config/site';
+import { services } from '../../data/services';
 ---
 <section id="contacto" class="bg-[#0f512c] py-18 text-white sm:py-24" aria-labelledby="contact-title">
   <div class="container-site grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
@@ -8,7 +9,6 @@ import { site, whatsappUrl } from '../../config/site';
       <p class="mt-6 max-w-xl text-lg leading-8 text-emerald-50">Contáctanos hoy mismo para tener asesoría personalizada y así obtener el 1er. Presupuesto totalmente gratis. Estamos ansiosos por ayudarte a crear el jardín de tus sueños.</p>
       <div class="mt-9 space-y-4 text-base sm:text-lg">
         <a href={`tel:${site.phoneE164}`} class="flex items-center gap-4 hover:underline"><span aria-hidden="true" class="text-xl">📞</span>{site.phoneLabel}</a>
-        <a href={`mailto:${site.email}`} class="flex items-center gap-4 break-all hover:underline"><span aria-hidden="true" class="text-xl">📧</span>{site.email}</a>
         <p class="flex items-center gap-4"><span aria-hidden="true" class="text-xl">📍</span>Retiro, Región del Maule</p>
       </div>
       <div class="mt-9 flex flex-wrap items-center gap-3">
@@ -19,42 +19,33 @@ import { site, whatsappUrl } from '../../config/site';
         <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" class="btn btn-light">WhatsApp ↗</a>
       </div>
     </div>
-    <form id="contact-form" action={`https://formsubmit.co/${site.email}`} data-ajax={`https://formsubmit.co/ajax/${site.email}`} method="POST" class="grid gap-4 rounded-[1.7rem] bg-[#fcfbf7] p-6 text-stone-900 shadow-xl dark:bg-[#213a2a] dark:text-white sm:p-8">
+    <form id="contact-form" class="grid gap-4 rounded-[1.7rem] bg-[#fcfbf7] p-6 text-stone-900 shadow-xl dark:bg-[#213a2a] dark:text-white sm:p-8">
       <h3 class="mb-2 border-b border-emerald-900/10 pb-4 text-center text-2xl font-extrabold text-[#14552d] dark:text-emerald-200">Formulario Asesoría</h3>
-      <input type="hidden" name="_subject" value="Nueva consulta desde Jardinería Yáñez" />
-      <div class="hidden" aria-hidden="true"><label>Dejar vacío <input name="_honey" tabindex="-1" autocomplete="off" /></label></div>
       <div><label for="contact-name" class="field-label">Nombre Completo</label><input class="input" id="contact-name" name="name" autocomplete="name" maxlength="80" required placeholder="Tu nombre..." /></div>
-      <div><label for="contact-email" class="field-label">Email</label><input class="input" id="contact-email" name="email" autocomplete="email" type="email" maxlength="120" required placeholder="tu@email.com" /></div>
+      <div><label for="contact-service" class="field-label">Servicio requerido</label><select class="input" id="contact-service" name="service" required><option value="" disabled selected>Selecciona un servicio</option>{services.map((service) => <option value={service.name}>{service.name}</option>)}<option value="Consulta general">Consulta general</option></select></div>
       <div><label for="contact-message" class="field-label">Mensaje</label><textarea class="input min-h-36 resize-y" id="contact-message" name="message" rows="5" minlength="15" maxlength="3000" required placeholder="¿En qué podemos ayudarte?"></textarea></div>
       <p class="text-xs text-stone-600 dark:text-stone-300"><a href="/privacidad/" class="underline hover:text-emerald-700">Información de privacidad</a></p>
-      <button type="submit" class="btn w-full rounded-xl bg-[#079b49] font-bold text-white hover:bg-[#087b3d] disabled:cursor-wait disabled:opacity-60">Enviar Mensaje</button>
-      <p id="contact-status" role="status" aria-live="polite" class="text-sm font-semibold" hidden></p>
+      <button type="submit" class="btn w-full rounded-xl bg-[#079b49] font-bold text-white hover:bg-[#087b3d]">Continuar en WhatsApp ↗</button>
+      <p class="text-center text-xs text-stone-600 dark:text-stone-300">Se abrirá WhatsApp con tu consulta lista. Presiona Enviar para completar la solicitud.</p>
+      <noscript><p class="text-center text-sm"><a href={whatsappUrl()} class="underline">Contactar directamente por WhatsApp</a></p></noscript>
     </form>
   </div>
 </section>
 <script>
-  import { sendForm } from '../../lib/form-submit.mjs';
+  import { whatsappUrl } from '../../config/site';
+  import { buildWhatsAppInquiry } from '../../lib/whatsapp-message.mjs';
+
   const form = document.querySelector<HTMLFormElement>('#contact-form');
-  const feedback = document.querySelector<HTMLElement>('#contact-status');
-  const submit = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
-  form?.addEventListener('submit', async (event) => {
+  form?.addEventListener('submit', (event) => {
     event.preventDefault();
-    if (!form.reportValidity() || !feedback || !submit) return;
-    const values = Object.fromEntries(new FormData(form).entries());
-    if (values._honey) return;
-    submit.disabled = true;
-    submit.textContent = 'Enviando…';
-    feedback.hidden = false;
-    feedback.className = 'text-sm font-semibold text-stone-600 dark:text-stone-200';
-    feedback.textContent = 'Enviando tu mensaje…';
-    try {
-      await sendForm(form.dataset.ajax || '', values);
-      feedback.className = 'text-sm font-semibold text-emerald-800 dark:text-emerald-200';
-      feedback.textContent = '¡Mensaje enviado! Pronto nos pondremos en contacto.';
-      form.reset();
-    } catch (error) {
-      feedback.className = 'text-sm font-semibold text-red-700 dark:text-red-300';
-      feedback.textContent = error instanceof Error ? error.message : 'No fue posible enviar el mensaje.';
-    } finally { submit.disabled = false; submit.textContent = 'Enviar Mensaje'; }
+    if (!form.reportValidity()) return;
+
+    const data = new FormData(form);
+    const message = buildWhatsAppInquiry({
+      name: String(data.get('name') ?? ''),
+      service: String(data.get('service') ?? ''),
+      message: String(data.get('message') ?? ''),
+    });
+    window.location.assign(whatsappUrl(message));
   });
 </script>

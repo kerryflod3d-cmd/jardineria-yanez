@@ -11,7 +11,7 @@ Desarrollé esta web para reunir los servicios del negocio, mostrar trabajos rea
 ## Funcionalidades
 
 - **Catálogo de servicios:** cinco categorías con fotografías y videos organizados en carruseles horizontales, navegación táctil y visor ampliado dentro de la página.
-- **Contacto y cotización:** acceso directo a WhatsApp, teléfono e Instagram y formulario de contacto por correo.
+- **Contacto y cotización:** formulario que prepara la consulta para WhatsApp, con nombre, servicio y mensaje; el cliente confirma el envío desde su aplicación. Acceso adicional a teléfono e Instagram.
 - **Reseñas:** presentación de testimonios en un carrusel y formulario de valoración. Las publicaciones se revisan y se incorporan manualmente.
 - **Información meteorológica:** barra fija con pronósticos para Retiro, Copihue, Parral, Longaví y Linares, obtenidos por coordenadas independientes.
 - **Experiencia adaptativa:** distribución para móvil y escritorio, navegación por secciones, modo oscuro y controles utilizables con teclado.
@@ -24,7 +24,7 @@ Desarrollé esta web para reunir los servicios del negocio, mostrar trabajos rea
 | [Astro](https://astro.build/) 7 | Generación estática, páginas y componentes. |
 | [Tailwind CSS](https://tailwindcss.com/) 4 | Estilos y diseño responsivo. |
 | TypeScript y JavaScript | Configuración de contenidos e interacciones del navegador. |
-| [FormSubmit](https://formsubmit.co/) | Envío de formularios sin servidor propio. |
+| [FormSubmit](https://formsubmit.co/) | Envío de reseñas al correo del negocio. |
 | [MET Norway](https://api.met.no/) | Pronósticos meteorológicos por localidad. |
 | [Vercel](https://vercel.com/) | Despliegue. |
 | Node.js `node:test` y GitHub Actions | Pruebas automatizadas e integración continua. |
@@ -76,7 +76,7 @@ La integración continua ejecuta estas comprobaciones mediante [GitHub Actions](
 
 ## Integraciones y mantenimiento
 
-**Formularios.** El sitio utiliza FormSubmit para entregar consultas y reseñas al correo del negocio. No almacena mensajes en una base de datos. La recepción del formulario debe verificarse con el correo de destino habilitado en el proveedor; la publicación de testimonios se realiza por separado, con revisión previa.
+**Formularios.** Las solicitudes de asesoría se preparan localmente y abren una conversación de WhatsApp con el mensaje precargado; el visitante debe pulsar Enviar para que el negocio lo reciba. Solo el formulario de reseñas utiliza FormSubmit para entregar opiniones al correo del negocio. No se almacenan mensajes en una base de datos y las reseñas se publican después de una revisión manual.
 
 **Clima.** La barra consulta MET Norway para cinco localidades y conserva temporalmente los resultados en el navegador. Muestra estimaciones meteorológicas y presenta un estado no disponible cuando la consulta falla. La atribución y licencia del proveedor se incluyen en el pie de página.
 

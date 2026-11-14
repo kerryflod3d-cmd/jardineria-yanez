@@ -1,5 +1,12 @@
 # Historial de cambios
 
+## Contacto por WhatsApp — 13 de noviembre de 2026
+
+- El formulario de asesoría abre WhatsApp con nombre, servicio y consulta precargados; el visitante confirma el envío en la aplicación.
+- Se eliminaron los campos de correo y teléfono del formulario de asesoría y su envío a FormSubmit.
+- Se mantiene FormSubmit exclusivamente para el formulario de reseñas.
+- Documentación de privacidad y pruebas actualizadas para el nuevo flujo.
+
 ## Ajustes finales — 13 de noviembre de 2026
 
 - Tarjetas de servicios con fondo beige `#F5F5DC`, conservando el modo oscuro.
